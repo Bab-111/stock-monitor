@@ -1,1 +1,39 @@
+name: Stock Monitor
 
+on:
+  schedule:
+    # 4 PM Taiwan (UTC+8) = 08:00 UTC
+    - cron: '0 8 * * 1-5'
+    # 10 PM Taiwan (UTC+8) = 14:00 UTC
+    - cron: '0 14 * * 1-5'
+  workflow_dispatch:   # manual trigger from Actions tab
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run stock monitor
+        run: python scripts/monitor.py
+
+      - name: Commit and push report
+        run: |
+          git config user.name  "Stock Monitor Bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add docs/
+          git diff --staged --quiet || git commit -m "📊 Stock report $(TZ='Asia/Taipei' date '+%Y-%m-%d %H:%M TW')"
+          git push
