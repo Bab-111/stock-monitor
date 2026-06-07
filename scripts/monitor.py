@@ -20,7 +20,7 @@ HISTORY_DIR.mkdir(parents=True, exist_ok=True)
 DOCS.mkdir(exist_ok=True)
 
 TAIWAN_TZ = ZoneInfo("Asia/Taipei")
-NOW_TW    = datetime.datetime.now(TAIWAN_TW)
+NOW_TW    = datetime.datetime.now(TAIWAN_TZ)
 NOW_UTC   = datetime.datetime.now(datetime.timezone.utc)
 
 with open(STOCKS_FILE) as f:
