@@ -223,7 +223,7 @@ brief += """- **RSI > 70**: Overbought (may pull back) 🔴
 # ══════════════════════════════════════════════════════════════════════════════
 # 6. SAVE
 # ══════════════════════════════════════════════════════════════════════════════
-(DOCS / "README.md").write_text(brief, encoding='utf-8')
+(ROOT / "README.md").write_text(brief, encoding='utf-8')
 print(f"✓ Brief saved")
 
 entry = {"ts": NOW_TW.isoformat(), "stocks": all_data, "summaries": summaries}
