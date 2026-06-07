@@ -180,15 +180,31 @@ for ticker in TICKERS:
     print(f"  ✓ {ticker}")
 
 # ════════════════════════════════════════════════════════════════
-# 5. GENERATE HTML
+# 5. BUILD SIGNALS
 # ════════════════════════════════════════════════════════════════
-print("\n[Generating] Creating HTML report...")
-
 gainers = [s for s in all_data if "error" not in s and (s.get("change_pct") or -999) > 3]
 losers  = [s for s in all_data if "error" not in s and (s.get("change_pct") or 999) < -3]
 movers  = [s for s in all_data if "error" not in s and (s.get("volume_ratio") or 0) > 1.5]
 
-html_content = f"""
+# Build signal HTML separately
+gainers_html = "".join([f"<li><strong>{s['ticker']}</strong>: +{s['change_pct']}%</li>" for s in gainers])
+losers_html = "".join([f"<li><strong>{s['ticker']}</strong>: {s['change_pct']}%</li>" for s in losers])
+movers_html = "".join([f"<li><strong>{s['ticker']}</strong>: {s['volume_ratio']}x</li>" for s in movers])
+
+signal_boxes = ""
+if gainers:
+    signal_boxes += f'<div class="signal-box"><h3>🚀 Strong Gainers</h3><ul class="signal-list">{gainers_html}</ul></div>'
+if losers:
+    signal_boxes += f'<div class="signal-box"><h3>📉 Big Drops</h3><ul class="signal-list">{losers_html}</ul></div>'
+if movers:
+    signal_boxes += f'<div class="signal-box"><h3>⚡ Unusual Volume</h3><ul class="signal-list">{movers_html}</ul></div>'
+
+# ════════════════════════════════════════════════════════════════
+# 6. GENERATE HTML
+# ════════════════════════════════════════════════════════════════
+print("\n[Generating] Creating HTML report...")
+
+html_head = f"""
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -408,26 +424,21 @@ html_content = f"""
         </header>
         
         <div class="content">
-            {f'<div class="section"><h2>🎯 Quick Signals</h2><div class="quick-signals">'
-            + (f'<div class="signal-box"><h3>🚀 Strong Gainers</h3><ul class="signal-list">{"".join([f"<li><strong>{s['ticker']}</strong>: +{s['change_pct']}%</li>" for s in gainers])}</ul></div>' if gainers else '')
-            + (f'<div class="signal-box"><h3>📉 Big Drops</h3><ul class="signal-list">{"".join([f"<li><strong>{s['ticker']}</strong>: {s['change_pct']}%</li>" for s in losers])}</ul></div>' if losers else '')
-            + (f'<div class="signal-box"><h3>⚡ Unusual Volume</h3><ul class="signal-list">{"".join([f"<li><strong>{s['ticker']}</strong>: {s['volume_ratio']}x</li>" for s in movers])}</ul></div>' if movers else '')
-            + '</div></div>'}
-            
-            <div class="section">
-                <h2>📈 Stock Analysis</h2>
+            <div class="section"><h2>🎯 Quick Signals</h2><div class="quick-signals">{signal_boxes}</div></div>
 """
+
+html_stocks = '<div class="section"><h2>📈 Stock Analysis</h2>'
 
 for s in all_data:
     if "error" in s:
-        html_content += f'<div class="stock-card" style="border-left-color: #dc3545;"><div class="stock-header"><span class="ticker">{s["ticker"]}</span></div><div style="color: #dc3545;">⚠️ Data unavailable ({s["error"]})</div></div>'
+        html_stocks += f'<div class="stock-card" style="border-left-color: #dc3545;"><div class="stock-header"><span class="ticker">{s["ticker"]}</span></div><div style="color: #dc3545;">⚠️ Data unavailable ({s["error"]})</div></div>'
         continue
     
     ticker = s["ticker"]
     change_class = "positive" if (s['change_pct'] or 0) > 0 else "negative"
     change_sign = "+" if (s['change_pct'] or 0) > 0 else ""
     
-    html_content += f"""
+    html_stocks += f"""
     <div class="stock-card">
         <div class="stock-header">
             <span class="ticker">{ticker}</span>
@@ -458,17 +469,19 @@ for s in all_data:
 """
     
     if s.get("news"):
-        html_content += '<div class="news"><strong>📰 Latest News:</strong>'
+        html_stocks += '<div class="news"><strong>📰 Latest News:</strong>'
         for n in s["news"][:2]:
             title = n['title'][:80]
-            html_content += f'<div class="news-item"><a href="{n["link"]}" target="_blank">{title}...</a><div class="source">{n["source"]}</div></div>'
-        html_content += '</div>'
+            html_stocks += f'<div class="news-item"><a href="{n["link"]}" target="_blank">{title}...</a><div class="source">{n["source"]}</div></div>'
+        html_stocks += '</div>'
     
-    html_content += '</div>'
+    html_stocks += '</div>'
 
-html_content += """
-            </div>
-            
+html_stocks += '</div>'
+
+next_update = (NOW_TW + datetime.timedelta(hours=6)).strftime('%a %H:%M TW')
+
+html_footer = f"""
             <div class="metrics-info">
                 <h4>📊 Key Metrics Explained</h4>
                 <ul>
@@ -483,15 +496,17 @@ html_content += """
         
         <footer>
             <p>🤖 Automated stock monitoring on GitHub Actions</p>
-            <p>Updated: 4 PM & 10 PM Taiwan Time (Mon-Fri) | Next update: """ + (NOW_TW + datetime.timedelta(hours=6)).strftime('%a %H:%M TW') + """</p>
+            <p>Updated: 4 PM & 10 PM Taiwan Time (Mon-Fri) | Next update: {next_update}</p>
         </footer>
     </div>
 </body>
 </html>
 """
 
+html_content = html_head + html_stocks + html_footer
+
 # ════════════════════════════════════════════════════════════════
-# 6. SAVE FILES
+# 7. SAVE FILES
 # ════════════════════════════════════════════════════════════════
 try:
     (DOCS / "index.html").write_text(html_content, encoding='utf-8')
