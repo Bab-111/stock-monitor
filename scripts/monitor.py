@@ -2,6 +2,7 @@
 """
 Stock Monitor v3 — Simple & Reliable
 Runs entirely on GitHub Actions. No local setup needed.
+Generates HTML for GitHub Pages.
 """
 
 import yfinance as yf
@@ -179,81 +180,324 @@ for ticker in TICKERS:
     print(f"  ✓ {ticker}")
 
 # ════════════════════════════════════════════════════════════════
-# 5. GENERATE BRIEF
+# 5. GENERATE HTML
 # ════════════════════════════════════════════════════════════════
-print("\n[Generating] Creating report...")
-
-brief = f"""# 📊 Daily Stock Brief
-
-**{NOW_TW.strftime('%a %b %d, %Y')} · {NOW_TW.strftime('%H:%M')} Taiwan Time**
-
----
-
-## 🎯 Quick Signals
-
-"""
+print("\n[Generating] Creating HTML report...")
 
 gainers = [s for s in all_data if "error" not in s and (s.get("change_pct") or -999) > 3]
 losers  = [s for s in all_data if "error" not in s and (s.get("change_pct") or 999) < -3]
 movers  = [s for s in all_data if "error" not in s and (s.get("volume_ratio") or 0) > 1.5]
 
-if gainers:
-    brief += "\n**🚀 Strong Gainers:**\n"
-    for s in gainers:
-        brief += f"- **{s['ticker']}**: +{s['change_pct']}% | vol {s['volume_ratio']}x\n"
-
-if losers:
-    brief += "\n**📉 Big Drops:**\n"
-    for s in losers:
-        brief += f"- **{s['ticker']}**: {s['change_pct']}% | vol {s['volume_ratio']}x\n"
-
-if movers:
-    brief += "\n**⚡ Unusual Volume:**\n"
-    for s in movers:
-        brief += f"- **{s['ticker']}**: {s['volume_ratio']}x average\n"
-
-brief += "\n---\n\n## 📈 Stock Analysis\n"
+html_content = f"""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Daily Stock Brief</title>
+    <style>
+        * {{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }}
+        body {{
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }}
+        .container {{
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }}
+        header {{
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }}
+        header h1 {{
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }}
+        .timestamp {{
+            font-size: 1.1em;
+            opacity: 0.9;
+        }}
+        .content {{
+            padding: 40px;
+        }}
+        .section {{
+            margin-bottom: 40px;
+        }}
+        .section h2 {{
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }}
+        .stock-card {{
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }}
+        .stock-card:hover {{
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }}
+        .stock-header {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }}
+        .ticker {{
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #667eea;
+        }}
+        .price {{
+            font-size: 1.2em;
+            font-weight: 600;
+        }}
+        .change.positive {{
+            color: #28a745;
+        }}
+        .change.negative {{
+            color: #dc3545;
+        }}
+        .metrics {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 12px;
+            font-size: 0.95em;
+        }}
+        .metric {{
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }}
+        .metric-label {{
+            color: #666;
+            font-weight: 600;
+        }}
+        .metric-value {{
+            color: #333;
+            font-size: 1.1em;
+            margin-top: 4px;
+        }}
+        .analysis {{
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 12px;
+            margin-top: 12px;
+            border-radius: 4px;
+            font-style: italic;
+            color: #1565c0;
+        }}
+        .news {{
+            margin-top: 12px;
+            font-size: 0.9em;
+        }}
+        .news-item {{
+            margin: 8px 0;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }}
+        .news-item a {{
+            color: #667eea;
+            text-decoration: none;
+        }}
+        .news-item a:hover {{
+            text-decoration: underline;
+        }}
+        .source {{
+            font-size: 0.85em;
+            color: #999;
+            margin-top: 4px;
+        }}
+        .quick-signals {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }}
+        .signal-box {{
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }}
+        .signal-box h3 {{
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }}
+        .signal-list {{
+            text-align: left;
+        }}
+        .signal-list li {{
+            margin: 5px 0;
+            list-style: none;
+            padding-left: 20px;
+            position: relative;
+        }}
+        .signal-list li:before {{
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }}
+        .metrics-info {{
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }}
+        .metrics-info h4 {{
+            margin-bottom: 10px;
+            color: #856404;
+        }}
+        .metrics-info ul {{
+            list-style-position: inside;
+            color: #856404;
+        }}
+        footer {{
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid #e0e0e0;
+        }}
+        @media (max-width: 768px) {{
+            header h1 {{
+                font-size: 1.8em;
+            }}
+            .content {{
+                padding: 20px;
+            }}
+            .stock-header {{
+                flex-direction: column;
+                align-items: flex-start;
+            }}
+        }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Daily Stock Brief</h1>
+            <div class="timestamp">{NOW_TW.strftime('%a, %b %d, %Y · %H:%M')} Taiwan Time</div>
+        </header>
+        
+        <div class="content">
+            {f'<div class="section"><h2>🎯 Quick Signals</h2><div class="quick-signals">'
+            + (f'<div class="signal-box"><h3>🚀 Strong Gainers</h3><ul class="signal-list">{"".join([f"<li><strong>{s['ticker']}</strong>: +{s['change_pct']}%</li>" for s in gainers])}</ul></div>' if gainers else '')
+            + (f'<div class="signal-box"><h3>📉 Big Drops</h3><ul class="signal-list">{"".join([f"<li><strong>{s['ticker']}</strong>: {s['change_pct']}%</li>" for s in losers])}</ul></div>' if losers else '')
+            + (f'<div class="signal-box"><h3>⚡ Unusual Volume</h3><ul class="signal-list">{"".join([f"<li><strong>{s['ticker']}</strong>: {s['volume_ratio']}x</li>" for s in movers])}</ul></div>' if movers else '')
+            + '</div></div>'}
+            
+            <div class="section">
+                <h2>📈 Stock Analysis</h2>
+"""
 
 for s in all_data:
     if "error" in s:
-        brief += f"\n### {s['ticker']}\n⚠️ Data unavailable ({s['error']})\n"
+        html_content += f'<div class="stock-card" style="border-left-color: #dc3545;"><div class="stock-header"><span class="ticker">{s["ticker"]}</span></div><div style="color: #dc3545;">⚠️ Data unavailable ({s["error"]})</div></div>'
         continue
     
     ticker = s["ticker"]
-    brief += f"\n### {ticker} — {s['name']}\n\n"
-    brief += f"**Price:** {s['currency']}{s['price']} ({s['change_pct']}%)\n"
-    brief += f"**Volume:** {s['volume_ratio']}x avg | RSI: {s['rsi']}\n"
-    brief += f"**52w range:** {s['currency']}{s['week_52_low']} - {s['currency']}{s['week_52_high']}\n\n"
-    brief += f"📌 **{analyze_stock(s)}**\n"
+    change_class = "positive" if (s['change_pct'] or 0) > 0 else "negative"
+    change_sign = "+" if (s['change_pct'] or 0) > 0 else ""
+    
+    html_content += f"""
+    <div class="stock-card">
+        <div class="stock-header">
+            <span class="ticker">{ticker}</span>
+            <span class="price">{s['currency']}{s['price']} <span class="change {change_class}">({change_sign}{s['change_pct']}%)</span></span>
+        </div>
+        <div>
+            <strong>{s['name']}</strong>
+        </div>
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-label">Volume</div>
+                <div class="metric-value">{s['volume_ratio']}x avg</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">RSI</div>
+                <div class="metric-value">{s['rsi'] or 'N/A'}</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">52w Low</div>
+                <div class="metric-value">{s['currency']}{s['week_52_low']}</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">52w High</div>
+                <div class="metric-value">{s['currency']}{s['week_52_high']}</div>
+            </div>
+        </div>
+        <div class="analysis">📌 {analyze_stock(s)}</div>
+"""
     
     if s.get("news"):
-        brief += "\n**📰 Latest News:**\n"
+        html_content += '<div class="news"><strong>📰 Latest News:</strong>'
         for n in s["news"][:2]:
-            title = n['title'][:70]
-            brief += f"- [{title}...]({n['link']}) _{n['source']}_\n"
+            title = n['title'][:80]
+            html_content += f'<div class="news-item"><a href="{n["link"]}" target="_blank">{title}...</a><div class="source">{n["source"]}</div></div>'
+        html_content += '</div>'
+    
+    html_content += '</div>'
 
-brief += f"\n---\n\n## 📊 Key Metrics Explained\n\n"
-brief += """- **RSI > 70**: Overbought (pullback likely) 🔴
-- **RSI < 30**: Oversold (bounce opportunity) 🟢
-- **Volume 2x+**: Unusual activity ⚡
-- **52w high**: Strong momentum zone 🚀
-- **52w low**: Support level test 📉
-
----
-
-*🤖 Automated stock monitoring on GitHub Actions*  
-*Updated: 4 PM & 10 PM Taiwan Time (Mon-Fri)*  
-*Next update: {(NOW_TW + datetime.timedelta(hours=6)).strftime('%a %H:%M TW')}*
+html_content += """
+            </div>
+            
+            <div class="metrics-info">
+                <h4>📊 Key Metrics Explained</h4>
+                <ul>
+                    <li><strong>RSI > 70:</strong> Overbought (pullback likely) 🔴</li>
+                    <li><strong>RSI < 30:</strong> Oversold (bounce opportunity) 🟢</li>
+                    <li><strong>Volume 2x+:</strong> Unusual activity ⚡</li>
+                    <li><strong>52w high:</strong> Strong momentum zone 🚀</li>
+                    <li><strong>52w low:</strong> Support level test 📉</li>
+                </ul>
+            </div>
+        </div>
+        
+        <footer>
+            <p>🤖 Automated stock monitoring on GitHub Actions</p>
+            <p>Updated: 4 PM & 10 PM Taiwan Time (Mon-Fri) | Next update: """ + (NOW_TW + datetime.timedelta(hours=6)).strftime('%a %H:%M TW') + """</p>
+        </footer>
+    </div>
+</body>
+</html>
 """
 
 # ════════════════════════════════════════════════════════════════
 # 6. SAVE FILES
 # ════════════════════════════════════════════════════════════════
 try:
-    (ROOT / "README.md").write_text(brief, encoding='utf-8')
-    print("[✓] README.md updated")
+    (DOCS / "index.html").write_text(html_content, encoding='utf-8')
+    print("[✓] index.html generated")
 except Exception as e:
-    print(f"❌ Error saving README.md: {e}")
+    print(f"❌ Error saving index.html: {e}")
     exit(1)
 
 try:
@@ -270,4 +514,4 @@ try:
 except:
     pass
 
-print("\n✅ Brief generated successfully!")
+print("\n✅ Report generated successfully!")
