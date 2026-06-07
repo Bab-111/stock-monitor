@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """
 Stock Monitor v3 — Simple & Reliable
-No API calls. Pure data analysis + smart rules.
+Runs entirely on GitHub Actions. No local setup needed.
 """
 
 import yfinance as yf
 import feedparser
 import requests
-import json, re, datetime
+import json
+import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+# Setup paths
 ROOT        = Path(__file__).parent.parent
 DOCS        = ROOT / "docs"
 HISTORY_DIR = DOCS / "history"
@@ -18,34 +20,44 @@ STOCKS_FILE = ROOT / "stocks.json"
 HISTORY_DIR.mkdir(parents=True, exist_ok=True)
 DOCS.mkdir(exist_ok=True)
 
+# Timezone setup
 TAIWAN_TZ = ZoneInfo("Asia/Taipei")
 NOW_TW    = datetime.datetime.now(TAIWAN_TZ)
 NOW_UTC   = datetime.datetime.now(datetime.timezone.utc)
 
-with open(STOCKS_FILE) as f:
-    config = json.load(f)
+# Load config
+try:
+    with open(STOCKS_FILE) as f:
+        config = json.load(f)
+    TICKERS = config.get("tickers", [])
+except Exception as e:
+    print(f"❌ Error loading stocks.json: {e}")
+    exit(1)
 
-TICKERS = config.get("tickers", [])
 print(f"[Stock Monitor] {NOW_TW.strftime('%Y-%m-%d %H:%M TW')} | {len(TICKERS)} stocks")
 
-# ══════════════════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════
 # 1. FETCH STOCK DATA
-# ══════════════════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════
 def safe(val, dec=2):
-    try:    return round(float(val), dec)
-    except: return None
+    try:
+        return round(float(val), dec)
+    except:
+        return None
 
 def calc_rsi(ticker, period=14):
     try:
         hist = yf.Ticker(ticker).history(period=period+1)
-        if len(hist) < period + 1: return None
+        if len(hist) < period + 1:
+            return None
         deltas = hist['Close'].diff()
         gains = deltas.where(deltas > 0, 0).rolling(period).mean()
         losses = -deltas.where(deltas < 0, 0).rolling(period).mean()
         rs = gains / losses
         rsi = 100 - (100 / (1 + rs))
         return round(rsi.iloc[-1], 0)
-    except: return None
+    except:
+        return None
 
 def fetch_stock(ticker):
     try:
@@ -73,29 +85,42 @@ def fetch_stock(ticker):
             "currency": info.get("currency", "USD"),
         }
     except Exception as e:
+        print(f"⚠️ Error fetching {ticker}: {e}")
         return {"ticker": ticker, "error": str(e)}
 
-# ══════════════════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════
 # 2. FETCH NEWS
-# ══════════════════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════
 def fetch_news(ticker):
     items = []
     try:
         feed = feedparser.parse(f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={ticker}&region=US&lang=en-US")
         for e in feed.entries[:2]:
-            items.append({"title": e.get("title", ""), "link": e.get("link", ""), "source": "Yahoo"})
-    except: pass
+            items.append({
+                "title": e.get("title", ""),
+                "link": e.get("link", ""),
+                "source": "Yahoo"
+            })
+    except:
+        pass
+    
     try:
         q = requests.utils.quote(f"{ticker} stock news")
         gfeed = feedparser.parse(f"https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en")
         for e in gfeed.entries[:1]:
-            items.append({"title": e.get("title", ""), "link": e.get("link", ""), "source": "Google"})
-    except: pass
+            items.append({
+                "title": e.get("title", ""),
+                "link": e.get("link", ""),
+                "source": "Google"
+            })
+    except:
+        pass
+    
     return items[:3]
 
-# ══════════════════════════════════════════════════════════════════════════════
-# 3. SMART ANALYSIS (Rule-based, no API calls)
-# ══════════════════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════
+# 3. SMART ANALYSIS
+# ════════════════════════════════════════════════════════════════
 def analyze_stock(s):
     """Generate actionable insight from data."""
     chg = s.get("change_pct") or 0
@@ -142,9 +167,10 @@ def analyze_stock(s):
     
     return signals[0] if signals else "Normal trading pattern"
 
-# ══════════════════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════
 # 4. COLLECT DATA
-# ══════════════════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════
+print("\n[Fetching] Downloading stock data...")
 all_data = []
 for ticker in TICKERS:
     data = fetch_stock(ticker)
@@ -152,17 +178,19 @@ for ticker in TICKERS:
     all_data.append(data)
     print(f"  ✓ {ticker}")
 
-# ══════════════════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════
 # 5. GENERATE BRIEF
-# ══════════════════════════════════════════════════════════════════════════════
-print("\n[Brief] Generating...")
+# ════════════════════════════════════════════════════════════════
+print("\n[Generating] Creating report...")
 
 brief = f"""# 📊 Daily Stock Brief
+
 **{NOW_TW.strftime('%a %b %d, %Y')} · {NOW_TW.strftime('%H:%M')} Taiwan Time**
 
 ---
 
 ## 🎯 Quick Signals
+
 """
 
 gainers = [s for s in all_data if "error" not in s and (s.get("change_pct") or -999) > 3]
@@ -170,58 +198,76 @@ losers  = [s for s in all_data if "error" not in s and (s.get("change_pct") or 9
 movers  = [s for s in all_data if "error" not in s and (s.get("volume_ratio") or 0) > 1.5]
 
 if gainers:
-    brief += "\n**🚀 Strong Gainers:**\n" + "".join([
-        f"- {s['ticker']}: +{s['change_pct']}% | vol {s['volume_ratio']}x\n" for s in gainers
-    ])
+    brief += "\n**🚀 Strong Gainers:**\n"
+    for s in gainers:
+        brief += f"- **{s['ticker']}**: +{s['change_pct']}% | vol {s['volume_ratio']}x\n"
 
 if losers:
-    brief += "\n**📉 Big Drops:**\n" + "".join([
-        f"- {s['ticker']}: {s['change_pct']}% | vol {s['volume_ratio']}x\n" for s in losers
-    ])
+    brief += "\n**📉 Big Drops:**\n"
+    for s in losers:
+        brief += f"- **{s['ticker']}**: {s['change_pct']}% | vol {s['volume_ratio']}x\n"
 
 if movers:
-    brief += "\n**⚡ Unusual Volume:**\n" + "".join([
-        f"- {s['ticker']}: {s['volume_ratio']}x average\n" for s in movers
-    ])
+    brief += "\n**⚡ Unusual Volume:**\n"
+    for s in movers:
+        brief += f"- **{s['ticker']}**: {s['volume_ratio']}x average\n"
 
 brief += "\n---\n\n## 📈 Stock Analysis\n"
 
 for s in all_data:
     if "error" in s:
-        brief += f"\n### {s['ticker']}\n⚠️ Data unavailable\n"
+        brief += f"\n### {s['ticker']}\n⚠️ Data unavailable ({s['error']})\n"
         continue
     
     ticker = s["ticker"]
     brief += f"\n### {ticker} — {s['name']}\n\n"
     brief += f"**Price:** {s['currency']}{s['price']} ({s['change_pct']}%)\n"
     brief += f"**Volume:** {s['volume_ratio']}x avg | RSI: {s['rsi']}\n"
-    brief += f"**52w range:** ${s['week_52_low']} - ${s['week_52_high']}\n\n"
+    brief += f"**52w range:** {s['currency']}{s['week_52_low']} - {s['currency']}{s['week_52_high']}\n\n"
     brief += f"📌 **{analyze_stock(s)}**\n"
     
     if s.get("news"):
-        brief += "\n**📰 Latest news:**\n"
+        brief += "\n**📰 Latest News:**\n"
         for n in s["news"][:2]:
-            brief += f"- [{n['title'][:60]}...]({n['link']}) ({n['source']})\n"
+            title = n['title'][:70]
+            brief += f"- [{title}...]({n['link']}) _{n['source']}_\n"
 
-brief += f"\n---\n\n## 📊 Key Metrics\n"
-brief += """- **RSI > 70**: Overbought (pullback coming)
-- **RSI < 30**: Oversold (bounce opportunity)
-- **Volume 2x+**: Unusual activity
-- **52w high**: Strong momentum zone
-- **52w low**: Support test zone
+brief += f"\n---\n\n## 📊 Key Metrics Explained\n\n"
+brief += """- **RSI > 70**: Overbought (pullback likely) 🔴
+- **RSI < 30**: Oversold (bounce opportunity) 🟢
+- **Volume 2x+**: Unusual activity ⚡
+- **52w high**: Strong momentum zone 🚀
+- **52w low**: Support level test 📉
 
-*Updated every 4 PM & 10 PM Taiwan time · Next: {(NOW_TW + datetime.timedelta(hours=6)).strftime('%H:%M')}*"""
+---
 
-# ══════════════════════════════════════════════════════════════════════════════
-# 6. SAVE
-# ══════════════════════════════════════════════════════════════════════════════
-(ROOT / "README.md").write_text(brief, encoding='utf-8')
-print("[✓] README.md updated")
+*🤖 Automated stock monitoring on GitHub Actions*  
+*Updated: 4 PM & 10 PM Taiwan Time (Mon-Fri)*  
+*Next update: {(NOW_TW + datetime.timedelta(hours=6)).strftime('%a %H:%M TW')}*
+"""
 
-entry = {"ts": NOW_TW.isoformat(), "stocks": all_data}
-hfile = HISTORY_DIR / (NOW_TW.strftime("%Y-%m-%d_%H%M") + ".json")
-hfile.write_text(json.dumps(entry, indent=2, default=str), encoding='utf-8')
-print("[✓] History saved")
+# ════════════════════════════════════════════════════════════════
+# 6. SAVE FILES
+# ════════════════════════════════════════════════════════════════
+try:
+    (ROOT / "README.md").write_text(brief, encoding='utf-8')
+    print("[✓] README.md updated")
+except Exception as e:
+    print(f"❌ Error saving README.md: {e}")
+    exit(1)
 
-(DOCS / ".nojekyll").touch()
+try:
+    entry = {"ts": NOW_TW.isoformat(), "stocks": all_data}
+    hfile = HISTORY_DIR / (NOW_TW.strftime("%Y-%m-%d_%H%M") + ".json")
+    hfile.write_text(json.dumps(entry, indent=2, default=str), encoding='utf-8')
+    print("[✓] History saved")
+except Exception as e:
+    print(f"❌ Error saving history: {e}")
+    exit(1)
+
+try:
+    (DOCS / ".nojekyll").touch()
+except:
+    pass
+
 print("\n✅ Brief generated successfully!")
