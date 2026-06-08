@@ -6,7 +6,6 @@ import json
 import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
-import os
 
 ROOT = Path(__file__).parent.parent
 DOCS = ROOT / "docs"
@@ -17,8 +16,6 @@ DOCS.mkdir(exist_ok=True)
 
 TAIWAN_TZ = ZoneInfo("Asia/Taipei")
 NOW_TW = datetime.datetime.now(TAIWAN_TZ)
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
-MODELS_API = "https://models.inference.ai.azure.com/chat/completions"
 
 try:
     with open(STOCKS_FILE) as f:
@@ -27,8 +24,6 @@ try:
 except Exception as e:
     print(f"Error: {e}")
     exit(1)
-
-print(f"[Stock Monitor v4] {NOW_TW.strftime('%Y-%m-%d %H:%M TW')} | {len(TICKERS)} stocks")
 
 def safe(val, dec=2):
     try:
@@ -81,6 +76,29 @@ def get_earnings_date(ticker):
         pass
     return None
 
+def get_options_greeks(ticker):
+    try:
+        stock = yf.Ticker(ticker)
+        expirations = stock.options
+        if not expirations:
+            return None
+        opts = stock.option_chain(expirations[0])
+        calls = opts.calls
+        if len(calls) == 0:
+            return None
+        price = stock.info.get("currentPrice") or stock.info.get("regularMarketPrice")
+        atm_call = calls.iloc[(calls['strike'] - price).abs().argsort()[:1]]
+        if len(atm_call) == 0:
+            return None
+        return {
+            "iv": safe(atm_call['impliedVolatility'].values[0] * 100, 2),
+            "delta": safe(atm_call['delta'].values[0], 3),
+            "theta": safe(atm_call['theta'].values[0], 4),
+            "expiration": expirations[0],
+        }
+    except:
+        return None
+
 def fetch_stock(ticker):
     try:
         stock = yf.Ticker(ticker)
@@ -91,7 +109,6 @@ def fetch_stock(ticker):
         avg_vol = info.get("averageVolume")
         
         five_day_avg = get_five_day_avg_volume(ticker)
-        vol_ratio = safe(vol / avg_vol) if vol and avg_vol else None
         five_day_ratio = safe(vol / five_day_avg) if vol and five_day_avg else None
         
         volume_spike = False
@@ -100,13 +117,13 @@ def fetch_stock(ticker):
         
         chg = safe((price - prev) / prev * 100) if price and prev else None
         rsi = calc_rsi(ticker)
+        greeks = get_options_greeks(ticker)
         
         return {
             "ticker": ticker,
             "name": info.get("longName", ticker),
             "price": safe(price),
             "change_pct": chg,
-            "volume_ratio": vol_ratio,
             "five_day_vol_ratio": five_day_ratio,
             "volume_spike": volume_spike,
             "rsi": rsi,
@@ -114,6 +131,7 @@ def fetch_stock(ticker):
             "week_52_low": safe(info.get("fiftyTwoWeekLow")),
             "currency": info.get("currency", "USD"),
             "earnings": get_earnings_date(ticker),
+            "greeks": greeks,
         }
     except Exception as e:
         print(f"Error fetching {ticker}: {e}")
@@ -123,113 +141,45 @@ def fetch_news(ticker):
     items = []
     try:
         feed = feedparser.parse(f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={ticker}&region=US&lang=en-US")
-        for e in feed.entries[:3]:
+        for e in feed.entries[:5]:
             items.append({
                 "title": e.get("title", ""),
                 "link": e.get("link", ""),
                 "source": "Yahoo Finance",
                 "published": e.get("published", "N/A"),
-                "summary": e.get("summary", "")[:200]
             })
     except:
         pass
-    try:
-        q = requests.utils.quote(f"{ticker} stock")
-        feed = feedparser.parse(f"https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en")
-        for e in feed.entries[:2]:
-            items.append({
-                "title": e.get("title", ""),
-                "link": e.get("link", ""),
-                "source": "Google News",
-                "published": e.get("published", "N/A"),
-                "summary": e.get("summary", "")[:200]
-            })
-    except:
-        pass
-    return items[:5]
+    return items
 
-def ai_summarize_news(ticker, news_items, stock_data):
-    if not news_items or not GITHUB_TOKEN:
-        return None
+def get_news_sentiment(title):
+    title_lower = title.lower()
+    positive = ['surge', 'rally', 'beat', 'rise', 'gain', 'up', 'strong', 'excellent', 'soar', 'bullish']
+    negative = ['crash', 'plunge', 'miss', 'fall', 'drop', 'down', 'weak', 'terrible', 'plummet', 'bearish']
     
-    news_text = "\n".join([f"- [{item['source']}] {item['title']}\n  {item['summary']}" for item in news_items])
+    pos_count = sum(1 for word in positive if word in title_lower)
+    neg_count = sum(1 for word in negative if word in title_lower)
     
-    prompt = f"""Analyze ONLY the provided news for {ticker}. Be brief and factual.
-    
-News:
-{news_text}
+    if pos_count > neg_count:
+        return "📈 Bullish"
+    elif neg_count > pos_count:
+        return "📉 Bearish"
+    else:
+        return "➡️ Neutral"
 
-Summary (max 3 bullet points):"""
-    
-    try:
-        headers = {
-            "Authorization": f"Bearer {GITHUB_TOKEN}",
-            "Content-Type": "application/json",
-        }
-        
-        payload = {
-            "model": "gpt-4o-mini",
-            "messages": [
-                {"role": "system", "content": "You are a financial analyst. Summarize ONLY using provided facts."},
-                {"role": "user", "content": prompt}
-            ],
-            "temperature": 0.3,
-            "top_p": 0.1,
-            "max_tokens": 200,
-        }
-        
-        response = requests.post(MODELS_API, json=payload, headers=headers, timeout=30)
-        
-        if response.status_code == 200:
-            result = response.json()
-            summary = result["choices"][0]["message"]["content"].strip()
-            return summary
-        else:
-            return None
-    except:
-        return None
-
-def analyze_stock(s):
-    chg = s.get("change_pct") or 0
-    vol = s.get("five_day_vol_ratio") or 1
-    rsi = s.get("rsi") or 50
-    
-    signals = []
-    
-    if vol >= 2.0:
-        signals.append(f"🔥 VOLUME SPIKE: {vol}x average")
-    if chg >= 5:
-        signals.append(f"🚀 Strong rally: +{chg}%")
-    elif chg <= -5:
-        signals.append(f"📉 Heavy drop: {chg}%")
-    if rsi > 75:
-        signals.append("🔴 Overbought (RSI>75)")
-    elif rsi < 25:
-        signals.append("🟢 Oversold (RSI<25)")
-    if s.get("earnings") and s["earnings"].get("days_away"):
-        days = s["earnings"]["days_away"]
-        if 0 <= days <= 7:
-            signals.append(f"📚 EARNINGS in {days} days")
-    
-    return " | ".join(signals) if signals else "Normal"
-
+print(f"[Stock Monitor v4] {NOW_TW.strftime('%Y-%m-%d %H:%M TW')} | {len(TICKERS)} stocks")
 print("\n[Fetching] Downloading stock data...")
 all_data = []
 for ticker in TICKERS:
     data = fetch_stock(ticker)
     data["news"] = fetch_news(ticker)
-    
-    if data.get("news") and not data.get("error"):
-        print(f"  [AI] Summarizing {ticker}...")
-        data["ai_summary"] = ai_summarize_news(ticker, data["news"], data)
-    
     all_data.append(data)
     print(f"  ✓ {ticker}")
 
 volume_spikes = [s for s in all_data if s.get("volume_spike") and "error" not in s]
 earnings_soon = [s for s in all_data if s.get("earnings") and s["earnings"].get("days_away") and 0 <= s["earnings"]["days_away"] <= 7 and "error" not in s]
 
-html_content = f"""
+html = f"""
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -238,80 +188,78 @@ html_content = f"""
     <title>Stock Monitor v4</title>
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-        body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; color: #333; }}
-        .container {{ max-width: 1200px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); overflow: hidden; }}
-        header {{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px 30px; text-align: center; }}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }}
+        .container {{ max-width: 1200px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }}
+        header {{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; text-align: center; }}
         header h1 {{ font-size: 2.5em; margin-bottom: 10px; }}
-        .timestamp {{ font-size: 1em; opacity: 0.9; margin-bottom: 15px; }}
-        .alerts-banner {{ background: #fff3cd; border-bottom: 3px solid #ffc107; padding: 15px 30px; display: flex; gap: 20px; flex-wrap: wrap; }}
-        .alert-box {{ display: flex; align-items: center; gap: 10px; font-weight: 600; }}
+        .alerts-banner {{ background: #fff3cd; border-bottom: 3px solid #ffc107; padding: 15px 30px; }}
+        .alert-box {{ font-weight: 600; }}
         .content {{ padding: 40px; }}
-        .section {{ margin-bottom: 40px; }}
-        .section h2 {{ font-size: 1.8em; margin-bottom: 20px; color: #667eea; border-bottom: 3px solid #667eea; padding-bottom: 10px; }}
-        .stock-card {{ background: #f8f9fa; border-left: 5px solid #667eea; padding: 25px; margin-bottom: 25px; border-radius: 8px; }}
-        .stock-card.volume-spike {{ border-left-color: #ff6b6b; background: #ffe0e0; }}
-        .stock-card.earnings-alert {{ border-left-color: #ffc107; background: #fff8e1; }}
+        .section h2 {{ font-size: 1.8em; color: #667eea; margin-bottom: 20px; border-bottom: 3px solid #667eea; padding-bottom: 10px; }}
+        .stock-card {{ background: #f8f9fa; border-left: 5px solid #667eea; padding: 20px; margin-bottom: 20px; border-radius: 8px; }}
+        .stock-card.spike {{ border-left-color: #ff6b6b; background: #ffe0e0; }}
+        .stock-card.earnings {{ border-left-color: #ffc107; background: #fff8e1; }}
         .stock-header {{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }}
-        .ticker {{ font-size: 1.6em; font-weight: bold; color: #667eea; }}
-        .price {{ font-size: 1.3em; font-weight: 600; }}
-        .change.positive {{ color: #28a745; }}
-        .change.negative {{ color: #dc3545; }}
-        .alerts {{ background: #fff9e6; border: 1px solid #ffc107; padding: 12px; border-radius: 6px; margin-bottom: 15px; font-weight: 500; color: #e67e22; }}
-        .metrics {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 15px; }}
+        .ticker {{ font-size: 1.5em; font-weight: bold; color: #667eea; }}
+        .price {{ font-size: 1.2em; }}
+        .pos {{ color: #28a745; }}
+        .neg {{ color: #dc3545; }}
+        .metrics {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 15px 0; }}
         .metric {{ background: white; padding: 12px; border-radius: 6px; border: 1px solid #e0e0e0; }}
-        .metric-label {{ color: #666; font-weight: 600; font-size: 0.9em; }}
-        .metric-value {{ color: #333; font-size: 1.2em; margin-top: 4px; font-weight: 600; }}
-        .ai-summary {{ background: #e8f4f8; border-left: 4px solid #2196F3; padding: 15px; margin-top: 15px; border-radius: 4px; font-size: 0.95em; line-height: 1.6; color: #1565c0; }}
-        .signal {{ background: #fff9e6; border-left: 4px solid #f39c12; padding: 12px; margin-top: 10px; border-radius: 4px; color: #d68910; font-weight: 500; }}
-        .news {{ margin-top: 15px; font-size: 0.9em; }}
-        .news-item {{ margin: 10px 0; padding: 10px; background: white; border-radius: 4px; border: 1px solid #e0e0e0; }}
+        .metric-label {{ color: #666; font-size: 0.85em; font-weight: 600; }}
+        .metric-value {{ color: #333; font-size: 1.1em; font-weight: 600; margin-top: 4px; }}
+        .signal {{ background: #fff9e6; border-left: 4px solid #f39c12; padding: 12px; margin: 12px 0; border-radius: 4px; color: #d68910; font-weight: 500; }}
+        .alerts {{ background: #fff9e6; border: 1px solid #ffc107; padding: 12px; margin: 12px 0; border-radius: 6px; color: #e67e22; font-weight: 500; }}
+        .alert-item {{ margin: 5px 0; }}
+        .greek {{ background: #f0f4ff; border: 1px solid #667eea; padding: 12px; margin: 12px 0; border-radius: 6px; }}
+        .greek-title {{ font-weight: bold; color: #667eea; margin-bottom: 8px; }}
+        .greek-item {{ display: inline-block; margin-right: 20px; margin-bottom: 5px; }}
+        .news {{ margin-top: 15px; }}
+        .news-item {{ background: white; border: 1px solid #e0e0e0; padding: 12px; margin: 10px 0; border-radius: 4px; }}
         .news-item a {{ color: #667eea; text-decoration: none; font-weight: 500; }}
-        .source {{ font-size: 0.8em; color: #999; margin-top: 4px; }}
-        footer {{ background: #f8f9fa; padding: 20px; text-align: center; color: #666; font-size: 0.9em; border-top: 1px solid #e0e0e0; }}
+        .news-sentiment {{ font-size: 0.85em; color: #666; margin-top: 4px; }}
+        footer {{ background: #f8f9fa; padding: 20px; text-align: center; color: #666; border-top: 1px solid #e0e0e0; }}
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>📊 Stock Monitor v4</h1>
-            <div class="timestamp">
-                Updated: {NOW_TW.strftime('%a, %b %d, %Y · %H:%M')} Taiwan Time<br>
-                <small>AI-Powered • Volume Alerts • Earnings Calendar • News Summary</small>
-            </div>
+            <div style="opacity: 0.9;">{NOW_TW.strftime('%a, %b %d, %Y · %H:%M')} Taiwan Time</div>
         </header>
 """
 
 if volume_spikes or earnings_soon:
-    html_content += '<div class="alerts-banner">'
+    html += '<div class="alerts-banner">'
     if volume_spikes:
-        html_content += f'<div class="alert-box">🔥 {len(volume_spikes)} VOLUME SPIKE(s)</div>'
+        html += f'<div class="alert-box">🔥 {len(volume_spikes)} VOLUME SPIKE(s)</div>'
     if earnings_soon:
-        html_content += f'<div class="alert-box">📚 {len(earnings_soon)} EARNINGS THIS WEEK</div>'
-    html_content += '</div>'
+        html += f'<div class="alert-box">📚 {len(earnings_soon)} EARNINGS THIS WEEK</div>'
+    html += '</div>'
 
-html_content += '<div class="content"><div class="section"><h2>📈 Stock Analysis</h2>'
+html += '<div class="content"><div class="section"><h2>📈 Stock Analysis</h2>'
 
 for s in all_data:
     if "error" in s:
-        html_content += f'<div class="stock-card"><span class="ticker">{s["ticker"]}</span><p style="color: red;">Error: {s["error"]}</p></div>'
+        html += f'<div class="stock-card"><span class="ticker">{s["ticker"]}</span><p style="color: red;">Error: {s["error"]}</p></div>'
         continue
     
-    change_class = "positive" if (s.get("change_pct") or 0) > 0 else "negative"
+    change_class = "pos" if (s.get("change_pct") or 0) > 0 else "neg"
     change_sign = "+" if (s.get("change_pct") or 0) > 0 else ""
     
     card_class = "stock-card"
     if s.get("volume_spike"):
-        card_class += " volume-spike"
+        card_class += " spike"
     if s.get("earnings") and s["earnings"].get("days_away") and 0 <= s["earnings"]["days_away"] <= 7:
-        card_class += " earnings-alert"
+        card_class += " earnings"
     
-    html_content += f'<div class="{card_class}">'
-    html_content += f'<div class="stock-header"><span class="ticker">{s["ticker"]}</span><span class="price">{s["currency"]}{s["price"]} <span class="change {change_class}">({change_sign}{s["change_pct"]}%)</span></span></div>'
-    html_content += f'<div><strong>{s["name"]}</strong></div>'
+    html += f'<div class="{card_class}">'
+    html += f'<div class="stock-header"><span class="ticker">{s["ticker"]}</span><span class="price">{s["currency"]}{s["price"]} <span class="{change_class}">({change_sign}{s["change_pct"]}%)</span></span></div>'
+    html += f'<div><strong>{s["name"]}</strong></div>'
     
     alerts = []
     if s.get("volume_spike"):
-        alerts.append(f"🔥 Volume: {s['five_day_vol_ratio']}x average")
+        alerts.append(f"🔥 Volume Spike: {s['five_day_vol_ratio']}x average")
     if s.get("earnings") and s["earnings"].get("days_away"):
         days = s["earnings"]["days_away"]
         if days == 0:
@@ -320,35 +268,61 @@ for s in all_data:
             alerts.append(f"📚 Earnings in {days} days ({s['earnings']['date']})")
     
     if alerts:
-        html_content += '<div class="alerts">' + '<br>'.join(alerts) + '</div>'
+        html += '<div class="alerts">' + ''.join([f'<div class="alert-item">{a}</div>' for a in alerts]) + '</div>'
     
-    html_content += '<div class="metrics">'
-    html_content += f'<div class="metric"><div class="metric-label">RSI</div><div class="metric-value">{s.get("rsi", "N/A")}</div></div>'
-    html_content += f'<div class="metric"><div class="metric-label">52w Low</div><div class="metric-value">{s["currency"]}{s["week_52_low"]}</div></div>'
-    html_content += f'<div class="metric"><div class="metric-label">52w High</div><div class="metric-value">{s["currency"]}{s["week_52_high"]}</div></div>'
-    html_content += '</div>'
+    html += '<div class="metrics">'
+    html += f'<div class="metric"><div class="metric-label">RSI</div><div class="metric-value">{s.get("rsi", "—")}</div></div>'
+    html += f'<div class="metric"><div class="metric-label">Volume Ratio</div><div class="metric-value">{s.get("five_day_vol_ratio", "—")}x</div></div>'
+    html += f'<div class="metric"><div class="metric-label">52w Low</div><div class="metric-value">{s["currency"]}{s["week_52_low"]}</div></div>'
+    html += f'<div class="metric"><div class="metric-label">52w High</div><div class="metric-value">{s["currency"]}{s["week_52_high"]}</div></div>'
+    html += '</div>'
     
-    html_content += f'<div class="signal">{analyze_stock(s)}</div>'
+    # Signal
+    chg = s.get("change_pct") or 0
+    vol = s.get("five_day_vol_ratio") or 1
+    rsi = s.get("rsi") or 50
     
-    if s.get("ai_summary"):
-        html_content += f'<div class="ai-summary"><strong>🤖 AI Analysis:</strong><br>{s["ai_summary"]}</div>'
+    signals = []
+    if vol >= 2.0:
+        signals.append(f"🔥 VOLUME SPIKE ({vol}x)")
+    if chg >= 7:
+        signals.append("🚀 Strong rally")
+    elif chg <= -7:
+        signals.append("📉 Heavy drop")
+    if rsi > 75:
+        signals.append("🔴 Overbought")
+    elif rsi < 25:
+        signals.append("🟢 Oversold")
     
+    if signals:
+        html += f'<div class="signal">📌 {" | ".join(signals)}</div>'
+    
+    # Options Greeks
+    if s.get("greeks"):
+        g = s["greeks"]
+        html += f'<div class="greek"><div class="greek-title">📊 Options (Exp: {g["expiration"]})</div>'
+        html += f'<div class="greek-item"><strong>IV:</strong> {g["iv"]}%</div>'
+        html += f'<div class="greek-item"><strong>Δ:</strong> {g["delta"]}</div>'
+        html += f'<div class="greek-item"><strong>Θ:</strong> {g["theta"]}</div>'
+        html += '</div>'
+    
+    # News
     if s.get("news"):
-        html_content += '<div class="news"><strong>📰 Latest News:</strong>'
-        for n in s["news"][:3]:
-            title = n['title'][:80]
-            html_content += f'<div class="news-item"><a href="{n["link"]}" target="_blank">{title}</a><div class="source">{n["source"]}</div></div>'
-        html_content += '</div>'
+        html += '<div class="news"><strong>📰 Latest News:</strong>'
+        for n in s["news"][:5]:
+            sentiment = get_news_sentiment(n["title"])
+            html += f'<div class="news-item"><a href="{n["link"]}" target="_blank">{n["title"][:80]}...</a><div class="news-sentiment">{sentiment} • Yahoo Finance</div></div>'
+        html += '</div>'
     
-    html_content += '</div>'
+    html += '</div>'
 
-html_content += '</div></div><footer><p>🤖 Stock Monitor v4 • AI-Powered • Fact-Checked • 100% FREE</p></footer></div></body></html>'
+html += '</div></div><footer><p>🤖 Stock Monitor v4 • Volume Alerts • Earnings Calendar • News Summary • 100% FREE</p></footer></div></body></html>'
 
 try:
-    (DOCS / "index.html").write_text(html_content, encoding='utf-8')
-    print("[✓] Dashboard generated successfully!")
+    (DOCS / "index.html").write_text(html, encoding='utf-8')
+    print("[✓] Dashboard generated!")
 except Exception as e:
     print(f"Error: {e}")
     exit(1)
 
-print("\n✅ Stock Monitor completed!")
+print("\n✅ Complete!")
