@@ -8,4 +8,10 @@
     "NOW",
     "2884.TW"
   ]
+  "config": {
+    "volume_threshold_multiplier": 2.0,
+    "earnings_alert_days": 7,
+    "timezone": "Asia/Taipei",
+    "update_times": ["04:00", "16:00"]
+  }
 }
