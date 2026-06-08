@@ -1,0 +1,208 @@
+{
+  "ts": "2026-06-07T16:43:38.606049+08:00",
+  "stocks": [
+    {
+      "ticker": "SOFI",
+      "name": "SoFi Technologies, Inc.",
+      "price": 16.03,
+      "change_pct": -6.53,
+      "volume_ratio": 1.18,
+      "rsi": null,
+      "week_52_high": 32.73,
+      "week_52_low": 13.46,
+      "market_cap": 20562343936,
+      "currency": "USD",
+      "news": [
+        {
+          "title": "Want to Retire a Millionaire? This Under-$20 Stock Deserves a Look.",
+          "link": "https://www.fool.com/investing/2026/06/06/want-to-retire-a-millionaire-this-under-20-stock-d/?.tsrc=rss",
+          "source": "Yahoo"
+        },
+        {
+          "title": "Is SoFi (SOFI) Trading Technology Ambition for Higher Legal Risk With Its New AI And Stablecoin?",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/sofi-sofi-trading-technology-ambition-140908290.html?.tsrc=rss",
+          "source": "Yahoo"
+        },
+        {
+          "title": "SOFI Stock Quote Price and Forecast - CNN",
+          "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9ZZ1ZTalFrN2NiRHFHUnV4RnVsYWFvNkNHX2dnSmxocDhyMGtsdWF2R25vemlqRjc1dDZtNWMtYkM4YnR2U21UbU5UR0YyaTU2?oc=5",
+          "source": "Google"
+        }
+      ]
+    },
+    {
+      "ticker": "GOOG",
+      "name": "Alphabet Inc.",
+      "price": 365.76,
+      "change_pct": -0.95,
+      "volume_ratio": 1.18,
+      "rsi": null,
+      "week_52_high": 404.47,
+      "week_52_low": 163.33,
+      "market_cap": 4460419481600,
+      "currency": "USD",
+      "news": [
+        {
+          "title": "The 4 Best \"Magnificent Seven\" Stocks to Buy Now",
+          "link": "https://www.fool.com/investing/2026/06/06/the-4-best-magnificent-seven-stocks-to-buy-now/?.tsrc=rss",
+          "source": "Yahoo"
+        },
+        {
+          "title": "Cathie Wood buys $99 million of popular megacap stock",
+          "link": "https://www.thestreet.com/investing/stocks/cathie-wood-buys-99-million-alphabet-googl?.tsrc=rss",
+          "source": "Yahoo"
+        },
+        {
+          "title": "Prediction: Google Stock Will Hit $600 on This Date - Yahoo Finance",
+          "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxObXVOMGd5aWpReEYwSkNFcXVwcGFoWTZMdlhxekZVWFNFdHloSUdoUFFiR1h5ZGhjUjFHT3E3SExvZFJaUXpJRVhvUU1RcV9mUWtkYmlfRGNELVdiX0k5NUdjSDNOZjBVbUpUX3I1N01fXzd3ZzdfUGNvM1l1S2luUGNFbTNoeWJfem9vVTVmR1Vteno4dTJBQVFFQnI?oc=5",
+          "source": "Google"
+        }
+      ]
+    },
+    {
+      "ticker": "SCO",
+      "name": "ProShares UltraShort Bloomberg Crude Oil",
+      "price": 26.48,
+      "change_pct": 3.08,
+      "volume_ratio": 0.47,
+      "rsi": null,
+      "week_52_high": 84.16,
+      "week_52_low": 22.84,
+      "market_cap": null,
+      "currency": "USD",
+      "news": [
+        {
+          "title": "ProShares Announces ETF Share Splits",
+          "link": "https://finance.yahoo.com/markets/options/articles/proshares-announces-etf-share-splits-223000629.html?.tsrc=rss",
+          "source": "Yahoo"
+        },
+        {
+          "title": "Oil\u2019s Decline Opens the Door on These 4 Sub-$30 Buys",
+          "link": "https://247wallst.com/investing/2026/05/05/oils-decline-opens-the-door-on-these-4-sub-30-buys/?.tsrc=rss",
+          "source": "Yahoo"
+        },
+        {
+          "title": "SCO 260605 16.00C (SCO260605C16000) Stock Options Chain | Quotes & News - Moomoo",
+          "link": "https://news.google.com/rss/articles/CBMihwJBVV95cUxQMXhqTi1kTjFNX1d0T2N0YzBxVWZOcE9XYm5HWFB4aGxHUEUxZFJiY1BYeUhUVjBZZjBZVktKNDFudjNzcnBvY3hWazFBMTRwVDRfUW13cnJpd1lhU3RGNnhoMk55QURjN0FFbGF2QVJKWERDQ1lVYmUwekhtT2tHMXV3dEtwY1A0RFFxYzUtanZ2dHlxLTBjWXhTejB2djRzcEEybjI2dWRtNDNiZ0o5N3JuX3NNQ1JMWW5UTGZnVnF2UGsxSzB2bVRzd1M2Yk1EcmJFaVFGaEZ1b2o3bUQwbGZzTC10TFNGalNzX0xMWjBvdTZzRGdmMVRfLVdxYjNudVdrdEZpVQ?oc=5",
+          "source": "Google"
+        }
+      ]
+    },
+    {
+      "ticker": "PLTR",
+      "name": "Palantir Technologies Inc.",
+      "price": 135.53,
+      "change_pct": -4.35,
+      "volume_ratio": 0.82,
+      "rsi": null,
+      "week_52_high": 207.52,
+      "week_52_low": 118.93,
+      "market_cap": 324907696128,
+      "currency": "USD",
+      "news": [
+        {
+          "title": "Forget Palantir Stock at $140 per Share. Buy This Artificial Intelligence (AI) Chip ETF Instead.",
+          "link": "https://www.fool.com/investing/2026/06/06/forget-palantir-stock-at-140-per-share-buy-this-ar/?.tsrc=rss",
+          "source": "Yahoo"
+        },
+        {
+          "title": "Does Palantir's Valuation Make It Too Dangerous to Buy?",
+          "link": "https://www.fool.com/investing/2026/06/06/does-palantirs-valuation-make-it-too-dangerous-to/?.tsrc=rss",
+          "source": "Yahoo"
+        },
+        {
+          "title": "Why Palantir Stock Is Sinking Today - Yahoo Finance",
+          "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxQVFJqUFJIdXJDRXRkeXJJUG54aGI5emdyaHNudWJFNTZZLWpxMlliakNnR1JKRWVGWE9BZkRlSm5xMUZCdFI4SVhwQnlCU0NRd1Vqa2FRMnpzbzNMR3VhQWJvQVdyOUh2cXZRNDB2ZkNtUWE1TGNwSHhrZm9OMGFLaUlQQjd2N3hZdUEzZERRZ1ZSN1dDcHJ2eTNGRXpVUQ?oc=5",
+          "source": "Google"
+        }
+      ]
+    },
+    {
+      "ticker": "LULU",
+      "name": "lululemon athletica inc.",
+      "price": 114.23,
+      "change_pct": -8.56,
+      "volume_ratio": 5.21,
+      "rsi": null,
+      "week_52_high": 338.49,
+      "week_52_low": 109.36,
+      "market_cap": 12971265024,
+      "currency": "USD",
+      "news": [
+        {
+          "title": "Brunswick and Callaway Golf Company Shares Are Falling, What You Need To Know",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/brunswick-callaway-golf-company-shares-005614101.html?.tsrc=rss",
+          "source": "Yahoo"
+        },
+        {
+          "title": "Optimum Communications and Latham Shares Are Falling, What You Need To Know",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/optimum-communications-latham-shares-falling-004814534.html?.tsrc=rss",
+          "source": "Yahoo"
+        },
+        {
+          "title": "Lululemon cuts annual outlook, citing 'negative' media commentary and disappointing product launches - CNBC",
+          "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTFByTC15QXg5TlZWalJDRFFqTWpLOUxIMFBFYktPMWNrWVpOdjhjZEwtSzRLbTJxYUZDdnpFdGt3X3pwVHlQQWZnMzFrcGJLRUNHaGhwVDR6VDNOcEIxeDhPMmFLckIwLUZYMnFNSXhiU3JZNVFrSnkw0gF8QVVfeXFMTzFxTE9jcjNOR1o0TFF5U3FXYmJCSjdPZzMxRTNKSWlIUnk1SU14dUFxX0NlX1RmQ3o1MjFYUUpTQUhKbVZKNmQzY1IySjBNdWZWdktSbU85U1ZrRUNVZURhVURvSlhmSlpQQnZ6U1lCd0JERUV4RGVTUm1ySQ?oc=5",
+          "source": "Google"
+        }
+      ]
+    },
+    {
+      "ticker": "NOW",
+      "name": "ServiceNow, Inc.",
+      "price": 112.45,
+      "change_pct": -5.79,
+      "volume_ratio": 1.07,
+      "rsi": null,
+      "week_52_high": 211.48,
+      "week_52_low": 81.24,
+      "market_cap": 115970588672,
+      "currency": "USD",
+      "news": [
+        {
+          "title": "Is Salesforce or ServiceNow a Better Stock to Buy Right Now?",
+          "link": "https://www.fool.com/investing/2026/06/06/is-salesforce-or-servicenow-a-better-stock-to-buy/?.tsrc=rss",
+          "source": "Yahoo"
+        },
+        {
+          "title": "Why ServiceNow (NOW) Shares Are Falling Today",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-servicenow-now-shares-falling-024014947.html?.tsrc=rss",
+          "source": "Yahoo"
+        },
+        {
+          "title": "$NOW stock fell 10% this week. Here's what we see in our data. - Quiver Quantitative",
+          "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOdThmTFU1MnpaMUNudFFfZVFYWWpaVUdEdk5jSi0zN3I3Y0JnZFFHNFhMcEliTFpUMzVDenJBRHozOUd5ME9ldThXVnI1UVBfV2tzXzJBaWxoSUw4Sk5uU2xZdV83MVc3Ymk2UXZBREdPcXNCeWhBSE1kUExSY08zNG1SQ3dSWEZ3YnM0WUZmQ0FObGtIYTA3MVZHbGRyQlZzbUE?oc=5",
+          "source": "Google"
+        }
+      ]
+    },
+    {
+      "ticker": "2884.TW",
+      "name": "E.SUN Financial Holding Company, Ltd.",
+      "price": 33.35,
+      "change_pct": -0.3,
+      "volume_ratio": 1.29,
+      "rsi": null,
+      "week_52_high": 35.5,
+      "week_52_low": 29.4,
+      "market_cap": 539402895360,
+      "currency": "TWD",
+      "news": [
+        {
+          "title": "E.SUN Financial Holding Earns 12th Consecutive Inclusion in Dow Jones Best-in-Class Indices",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/e-sun-financial-holding-earns-010000324.html?.tsrc=rss",
+          "source": "Yahoo"
+        },
+        {
+          "title": "E.SUN Financial Holding Named to S&P Global Sustainability Yearbook for 12 Consecutive Years",
+          "link": "https://finance.yahoo.com/news/e-sun-financial-holding-named-060600313.html?.tsrc=rss",
+          "source": "Yahoo"
+        },
+        {
+          "title": "Loan losses (actual) to loan loss reserve of E.SUN Financial Holding Co., Ltd. \u2013 TWSE:2884 - TradingView",
+          "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNRHFhWENIOFhpeG5NZGRMcU11bGhIM005bkc1OWxZSU45Tlk0Qmp1b0xpb0FDSFFnTVlQa2FnZDF4bzlVSWJ2TzFrQTV6U1NNMHUwTUpaRTJJdHVPOVprdC1za2tKdlBEZDlLSzJtSHFkS1Q1ZmsybDJVM3NjU1JZdGlOZENQeDNWN3o3dkFVMVpoWUM1dl82dEI3RWltbU5lbWhGenlBUS1jaGNoSnlF?oc=5",
+          "source": "Google"
+        }
+      ]
+    }
+  ]
+}

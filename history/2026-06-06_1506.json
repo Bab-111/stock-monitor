@@ -1,0 +1,563 @@
+{
+  "timestamp_utc": "2026-06-06T07:06:46.348406+00:00",
+  "timestamp_tw": "2026-06-06T15:06:46.348397+08:00",
+  "stocks": [
+    {
+      "ticker": "SOFI",
+      "name": "SoFi Technologies, Inc.",
+      "price": 16.03,
+      "change_pct": -6.53,
+      "volume": 79371245,
+      "avg_volume": 67117300,
+      "volume_ratio": 1.18,
+      "market_cap": 20562343936,
+      "week_52_high": 32.73,
+      "week_52_low": 13.46,
+      "institutional_pct": 0.5665,
+      "top_institutions": [
+        {
+          "Date Reported": "2026-03-31 00:00:00",
+          "Holder": "Blackrock Inc.",
+          "pctHeld": 0.0542,
+          "Shares": 69557164,
+          "Value": 1115001386,
+          "pctChange": 0.0061000003
+        },
+        {
+          "Date Reported": "2026-03-31 00:00:00",
+          "Holder": "Vanguard Capital Management LLC",
+          "pctHeld": 0.044499997,
+          "Shares": 57108581,
+          "Value": 915450592,
+          "pctChange": 1.0
+        },
+        {
+          "Date Reported": "2026-03-31 00:00:00",
+          "Holder": "Vanguard Portfolio Management LLC",
+          "pctHeld": 0.0397,
+          "Shares": 50975115,
+          "Value": 817131128,
+          "pctChange": 1.0
+        }
+      ],
+      "sector": "Financial Services",
+      "currency": "USD",
+      "news": [
+        {
+          "title": "SoFi, Fiserv, and MarketAxess Shares Are Falling, What You Need To Know",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/sofi-fiserv-marketaxess-shares-falling-033614244.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Week\u2019s Best: Early Retirement Is Often Unintended",
+          "link": "https://finance.yahoo.com/m/de4301fe-f67c-3692-b664-99f8c4560ab3/week%E2%80%99s-best%3A-early-retirement.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "SoFi's Rule of 40 Strength is Becoming Impossible for Investors to Ignore",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/sofis-rule-40-strength-becoming-174100148.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "SpaceX IPO: How can I buy the stock?",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/spacex-ipo-how-can-i-buy-the-stock-141820340.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "SoFi Scrutiny Grows As Legal Probe And Short Seller Claims Hit Valuation",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/sofi-scrutiny-grows-legal-probe-131709145.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Is SoFi Technologies (SOFI) Stock Price Getting Ahead Of Its Growth Story? - simplywall.st",
+          "link": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPa1loemRyOHNCU2xTcllRRmFGUko3YnRLX0ptMHcyNWs0TFJQaDJSTTE0WW51UEV1SW5IX0hEdjA4MGlHSHJ2Z1hlNUR1WVd5V1A4MVBRN3l6TEZ3OXA5MVdWdDltR1FZYkdkUE95SVZhTkhyVGZiQ1hyMTdadGQzS2ZSaHl2RmY0Z1ZIQ19ia3JKTjl0eE91UVpfamQ1TVJDSFRGejd5amxhV0xkS0FRZjA0TXRsRTBoOHYxRmN4cEhhNUFWTmZTX2RncTNuaDRJTnFMclA4Q0FWdGxyOEF5djhEZlPSAeoBQVVfeXFMTWt4RmgzZUItanVqd2FFUWJEQTVJVFlYbmlOMzlZLVZRemc1UUNyUEQ5QWlwT3BRN3VlRjd5c3ZXOTNfbEhrNnRGSXd2R3k3bGZOSEdWQ0o2dGs4MThvNHBNNzQyRlI1Rm9MWnN6b29LY3FwRTlsbTFSMXRDZ2k4NWV5Rk1ncEYtSk9fYlI5WkpQUlE0LXVVUi1xNDJsZ0lmQloyUmQyT01RNkEwVGlMVmxDV21sQWxDcjM4dWRyNFVFSm9WdUdWNHdjZFpfNklYdEdDVk1rYllFTHFoSEtpckZURzd1djh6TTVR?oc=5",
+          "source": "Google News"
+        },
+        {
+          "title": "SoFi Technologies Stock (SOFI) Opinions on Ongoing Market Discussions - Quiver Quantitative",
+          "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOMEhWeExGazE3cnZrcjBpaUdiREt2MkVTVmRYSEJ5d25SMDNlQmFwZXdMWWRUNWRtZkFsdWhiY0R6VXpLMjBESlpOXzByTy1ocHg0cTU1T3ZpQXF3MExvekJmZzdNZF9tbTluWTJMWTRpdkppaW9OeDNtNmdBZDEyNUpxMEtYRGdPUzI1RGR6VUF4aWE5Zm5RaHJVWnhGZktiT2NCa1p2TnlOQQ?oc=5",
+          "source": "Google News"
+        },
+        {
+          "title": "SoFi Scrutiny Grows As Legal Probe And Short Seller Claims Hit Valuation - Yahoo Finance",
+          "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNRkhHMGhZLTVVUVBza0c0THczd2l3UW5Fb1psWW13aE1IZEJ4aUhmRzl5b09VMDloMlJTR0x1QlhneTd6MWp2UXRLd1RaNzUwYmJaMndYYmx4VnQwT01oNUNIbjI2QlJwWlQ1UjJQN1BZcUItcDFXUl95N1E1TXRjOTNpMlY2MW43WGRqSzdZVTB6RW5KNWhSM0hxNjU?oc=5",
+          "source": "Google News"
+        }
+      ]
+    },
+    {
+      "ticker": "GOOG",
+      "name": "Alphabet Inc.",
+      "price": 365.76,
+      "change_pct": -0.95,
+      "volume": 23269836,
+      "avg_volume": 19781560,
+      "volume_ratio": 1.18,
+      "market_cap": 4460419481600,
+      "week_52_high": 404.47,
+      "week_52_low": 163.33,
+      "institutional_pct": 0.611,
+      "top_institutions": [
+        {
+          "Date Reported": "2026-03-31 00:00:00",
+          "Holder": "Blackrock Inc.",
+          "pctHeld": 0.0669,
+          "Shares": 364758302,
+          "Value": 133414000101,
+          "pctChange": 0.0097
+        },
+        {
+          "Date Reported": "2026-03-31 00:00:00",
+          "Holder": "Vanguard Capital Management LLC",
+          "pctHeld": 0.0554,
+          "Shares": 302262176,
+          "Value": 110555416445,
+          "pctChange": 1.0
+        },
+        {
+          "Date Reported": "2026-03-31 00:00:00",
+          "Holder": "State Street Corporation",
+          "pctHeld": 0.034,
+          "Shares": 185714752,
+          "Value": 67927029505,
+          "pctChange": -0.0074
+        }
+      ],
+      "sector": "Communication Services",
+      "currency": "USD",
+      "news": [
+        {
+          "title": "Is Wall Street\u2019s AI boom spreading to main Street?",
+          "link": "https://finance.yahoo.com/economy/articles/wall-street-ai-boom-spreading-055622891.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Apple Stock Looks Strong. One Number Says Be Careful.",
+          "link": "https://www.trefis.com/articles/601622/apple-stock-looks-strong-one-number-says-be-careful/2026-06-05?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Berkshire Hathaway Just Agreed to Put $10 Billion Into Alphabet's AI Build-Out. Should Investors Follow?",
+          "link": "https://www.fool.com/investing/2026/06/05/berkshire-hathaway-just-put-10-billion-into-alphab/?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "RDDT Stock Plunges After Hours On S&P 500 Exclusion: But Wells Fargo Forecasts $550M AI Deal Jackpot",
+          "link": "https://stocktwits.com/news-articles/markets/equity/rddt-stock-plunges-after-hours-on-sandp-500-exclusion-but-wells-fargo-forecasts-550-million-ai-deal-jackpot/cZ0FzQfReCw?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Oracle Stock Has Returned $54 Billion To Shareholders. Can It Continue?",
+          "link": "https://www.trefis.com/articles/601600/years-of-rewards-54-bil-from-oracle-stock/2026-06-05?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Why Alphabet Inc. (GOOG) is One of the Best Stocks to Buy Now for Long Term Growth - Yahoo Finance",
+          "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQN1lONlBGVHdjY3ZyR1dNel9HYlBCMUlFM0xRMWxPdEtIWFM0V09TQ291TGN5V1hxbWtuWGY0djN4ajIzRnlieUhCV09SV2RZMHptZlMydlVJR2ZLRXU4dDREQ0hJR05BMW1BbW5FekM5Nlc3SG4ydmgyeE4xTjU3T1ptV0p0bnhxTi1YSE8xSjBETGll?oc=5",
+          "source": "Google News"
+        },
+        {
+          "title": "Alphabet\u2019s Mega Fundraising Shows the Value of Being a Public Company - WSJ",
+          "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNWVVSUFllZXpUNG01OGJqN2xQdUFrZ1VfNTdwMDJFbjU4eHRnckg0U2ZOVkNWZjZXbzZBdmdLcVBYTGZNd2pUSkExWXNXWHpyZlJjLUhjZDRvcExJc3BWblNUc3RpMzFwZDdjdHVTSk80R2hqbnUxdTloU295X0RmMG1ESQ?oc=5",
+          "source": "Google News"
+        },
+        {
+          "title": "Still Bullish On Alphabet Stock After Its $85B Capital Raise (NASDAQ:GOOG) - Seeking Alpha",
+          "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxORkFkWXA4bWZpUDA2aXhIWUFkQi1vWjdCSENXN3VDbTV3c2ROV2xuQTE2cDlzRFowQ2pFcmw0VEdKSTB4a0xza3UyMFFUQXVILTNzcWxaclF5LS04dDRTbUJ6VFctRkszU3Y2bmpMZHdrZjljcEtOS0MxdnFKR2R6TWJseGdRLWhPUVpNOHNXRG1KZjZYcTZCVDNn?oc=5",
+          "source": "Google News"
+        }
+      ]
+    },
+    {
+      "ticker": "SCO",
+      "name": "ProShares UltraShort Bloomberg Crude Oil",
+      "price": 26.48,
+      "change_pct": 3.08,
+      "volume": 6494073,
+      "avg_volume": 13708519,
+      "volume_ratio": 0.47,
+      "market_cap": null,
+      "week_52_high": 84.16,
+      "week_52_low": 22.84,
+      "institutional_pct": null,
+      "top_institutions": [],
+      "sector": null,
+      "currency": "USD",
+      "news": [
+        {
+          "title": "ProShares Announces ETF Share Splits",
+          "link": "https://finance.yahoo.com/markets/options/articles/proshares-announces-etf-share-splits-223000629.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Oil\u2019s Decline Opens the Door on These 4 Sub-$30 Buys",
+          "link": "https://247wallst.com/investing/2026/05/05/oils-decline-opens-the-door-on-these-4-sub-30-buys/?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Here Are Thursday\u2019s Top Wall Street Analyst Research Calls: Akamai Technologies, Astra-Zeneca, Brinker, e.l.f. Beauty, Freeport-McMoran, Vale, Wingstop, Wix.com, and More",
+          "link": "https://247wallst.com/investing/2026/04/02/here-are-thursdays-top-wall-street-analyst-research-calls/?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "With oil skyrocketing, Gold at $5100 per ounce, and the Dow, and NASDAQ down, Take advantage of Great Opportunities!",
+          "link": "https://247wallst.com/investing/2026/03/10/with-oil-skyrocketing-gold-at-5100-per-ounce-and-the-dow-and-nasdaq-down-take-advantage-of-great-opportunities/?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Can Oil Prices Rally in 2026? ETFs in Focus",
+          "link": "https://finance.yahoo.com/news/oil-prices-rally-2026-etfs-150000589.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "ProShares UltraShort Bloomberg Crude Oil ETF: Still Not For Investors (NYSEARCA:SCO) - Seeking Alpha",
+          "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOcnFhWng1UkVtd2ZrZUgzeEo5bGdObUd3UHJiRUEtd2dya2owc1QzY05hR1J4UGlGX2FoVlRXTkNmaFhSbkx3cHowczhBNDJTVUhhTW9VQUhNcGVHdWNkcFl6cGdodU1VWnBSMnNOLUdXdXF3MEpSQUtRQjlzZzNoYWpIZGlPc0dJQjdIY1cxQ2F2NHpJYnE5QjZrSFU3SllSWVRkLWZFbW4wbjhkT2c?oc=5",
+          "source": "Google News"
+        },
+        {
+          "title": "Behavioral Patterns of SCO and Institutional Flows - Stock Traders Daily",
+          "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOTklXc0FqSmtURUdVQmtyM0R3U1R1dmhvS093SUNHUzhtMUlZYjZDVHIzcFlFcEpmTDhGZGdTVUhrZm9GR1h1N3J2WHU2TE1KSU5yNFJZeUM0em9jRWUtMEV6dVF3d1RyMVFKNFZkcTI0WE8tcktkMkNzSTBaWjBWdTY0U1FPX29JTEpMSzh3UUItcW9vV3QxYk1HN0RyN1Y4djZxWTZWZ2l1ekhiT05ZNmVRQUcxX2tSWEYtbXRxRXMycFNQTHpRRWtB?oc=5",
+          "source": "Google News"
+        },
+        {
+          "title": "SCO Stock Price, News & Analysis - Stock Titan",
+          "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9WYmlGQjJtNmsyX3FBU0VwMjlQN3RycFVuOXV6aHdORjczTHlUemJsc2s4RmJWbDhwTFh2ZlhwRzNxM1oyS1p6OG5lcktqX0FRcnc?oc=5",
+          "source": "Google News"
+        }
+      ]
+    },
+    {
+      "ticker": "PLTR",
+      "name": "Palantir Technologies Inc.",
+      "price": 135.53,
+      "change_pct": -4.35,
+      "volume": 37796251,
+      "avg_volume": 45909012,
+      "volume_ratio": 0.82,
+      "market_cap": 324907696128,
+      "week_52_high": 207.52,
+      "week_52_low": 118.93,
+      "institutional_pct": 0.6236,
+      "top_institutions": [
+        {
+          "Date Reported": "2026-03-31 00:00:00",
+          "Holder": "Blackrock Inc.",
+          "pctHeld": 0.0867,
+          "Shares": 188990971,
+          "Value": 25613946068,
+          "pctChange": -0.0224
+        },
+        {
+          "Date Reported": "2026-03-31 00:00:00",
+          "Holder": "Vanguard Capital Management LLC",
+          "pctHeld": 0.0664,
+          "Shares": 144837529,
+          "Value": 19629830128,
+          "pctChange": 1.0
+        },
+        {
+          "Date Reported": "2026-03-31 00:00:00",
+          "Holder": "State Street Corporation",
+          "pctHeld": 0.0466,
+          "Shares": 101626594,
+          "Value": 13773452160,
+          "pctChange": -0.0074
+        }
+      ],
+      "sector": "Technology",
+      "currency": "USD",
+      "news": [
+        {
+          "title": "Why Palantir Stock Sank Today",
+          "link": "https://www.fool.com/investing/2026/06/05/why-palantir-stock-sank-today/?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Palantir Partners with Google Cloud to Integrate Gemini AI Tools. Why the Deal Matters for PLTR Stock Investors.",
+          "link": "https://www.barchart.com/story/news/2331559/palantir-partners-with-google-cloud-to-integrate-gemini-ai-tools-why-the-deal-matters-for-pltr-stock-investors?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "After Months of Watching AI Innovation ETFs Run These 3 Active Funds Stand Out and the Revolution Has Barely Started",
+          "link": "https://247wallst.com/investing/2026/06/05/after-months-of-watching-ai-innovation-etfs-run-these-3-active-funds-stand-out-and-the-revolution-has-barely-started/?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Exploring 3 High Growth Tech Stocks In The US Market",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/exploring-3-high-growth-tech-173829979.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Defense Stocks Hit Pause As Trump's Pentagon Remakes Military Industrial Complex",
+          "link": "https://finance.yahoo.com/m/0028524d-1582-395a-98dc-cecfbcd4378b/defense-stocks-hit-pause-as.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Why Palantir Stock Is Sinking Today - Yahoo Finance",
+          "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxQVFJqUFJIdXJDRXRkeXJJUG54aGI5emdyaHNudWJFNTZZLWpxMlliakNnR1JKRWVGWE9BZkRlSm5xMUZCdFI4SVhwQnlCU0NRd1Vqa2FRMnpzbzNMR3VhQWJvQVdyOUh2cXZRNDB2ZkNtUWE1TGNwSHhrZm9OMGFLaUlQQjd2N3hZdUEzZERRZ1ZSN1dDcHJ2eTNGRXpVUQ?oc=5",
+          "source": "Google News"
+        },
+        {
+          "title": "Palantir Technologies Stock (PLTR) Opinions on Recent Earnings and AI Momentum - Quiver Quantitative",
+          "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOOE9Kd3FpS0FMVkhiQkhDNkhYWlkyVzRFd2UtS29QNHJ1Y083eHY3QWxzNlpZT1VQNXdBajhITGd5ZTRGc3QxUU41TmFfWTJoeXQxbk5vTXRVMHU5OHFreVV4OXJhcmRtNWM0NS1YUEVfa2hVUGxWZHM3LTBZd3p1SHlDMW42c0pfRmlSb1hEU2dDU0xtaFBEMUl0N0o4RXdROUIyVXVrQmxNNFBuOUFoNTk3YVVyUQ?oc=5",
+          "source": "Google News"
+        },
+        {
+          "title": "Palantir Technologies Inc Stock (PLTR) Moved Down by 4.02% on Jun 5: What Signal Does It Send? - TradingKey",
+          "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQSkFkZ1VOVGpRMjNVUldCQ0tldjR3emNMN2c0N0JjQ292b19KcGlhY2oyMEpETXFULWJDZ1cxQXNvT1dUUFVwa2hrOGw2dFdUMUIzaERiLUpXbnowelo1VEgzWXpSeWpHY0xla2ZBdVd5RkxqMEZTaWZfM1hhOHdJUGd6Vk9SeTBoS2pN?oc=5",
+          "source": "Google News"
+        }
+      ]
+    },
+    {
+      "ticker": "LULU",
+      "name": "lululemon athletica inc.",
+      "price": 114.23,
+      "change_pct": -8.56,
+      "volume": 16093667,
+      "avg_volume": 3091225,
+      "volume_ratio": 5.21,
+      "market_cap": 12971265024,
+      "week_52_high": 338.49,
+      "week_52_low": 109.36,
+      "institutional_pct": 0.8098,
+      "top_institutions": [
+        {
+          "Date Reported": "2026-03-31 00:00:00",
+          "Holder": "Blackrock Inc.",
+          "pctHeld": 0.086899996,
+          "Shares": 9501548,
+          "Value": 1085361859,
+          "pctChange": -0.042600002
+        },
+        {
+          "Date Reported": "2026-03-31 00:00:00",
+          "Holder": "Vanguard Capital Management LLC",
+          "pctHeld": 0.0634,
+          "Shares": 6930622,
+          "Value": 791684974,
+          "pctChange": 1.0
+        },
+        {
+          "Date Reported": "2026-03-31 00:00:00",
+          "Holder": "Vanguard Portfolio Management LLC",
+          "pctHeld": 0.0473,
+          "Shares": 5171332,
+          "Value": 590721271,
+          "pctChange": 1.0
+        }
+      ],
+      "sector": "Consumer Cyclical",
+      "currency": "USD",
+      "news": [
+        {
+          "title": "Brunswick and Callaway Golf Company Shares Are Falling, What You Need To Know",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/brunswick-callaway-golf-company-shares-005614101.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Optimum Communications and Latham Shares Are Falling, What You Need To Know",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/optimum-communications-latham-shares-falling-004814534.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Oxford Industries and Purple Stocks Trade Down, What You Need To Know",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/oxford-industries-purple-stocks-trade-004014405.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Why Peloton (PTON) Shares Are Trading Lower Today",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-peloton-pton-shares-trading-003214893.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Stitch Fix, fuboTV, and Sabre Stocks Trade Down, What You Need To Know",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/stitch-fix-fubotv-sabre-stocks-002414738.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "lululemon expects 2026 sales to slip even after a $2.5B Q1 - Stock Titan",
+          "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQQTFlOC1vM2ZoVFltSC1zLXN5VkxsMjlsTjJjM0E3STR1ZklRb2ZMS1lMTUZiMndNWURGbU5leVJXNUZuSHUxQTMxcUdwal8wZ3J3Z3Z0N0k5RHJVdWR3aFJoMHRfNHVOcjZhaWc1LVMtYkJkMDJ6M0d5bGQ4bGVZajRTRU9pUlpRYTlZYmEyN21xYlczb1NmcDZJa24tVkE4cUUyX08zUTRYQUdkT05saW41UUk?oc=5",
+          "source": "Google News"
+        },
+        {
+          "title": "Lululemon Slashed Its Outlook. The Stock Is Plunging to Its Lowest Point Since 2018 - Investopedia",
+          "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNMkNCWlQ2VGw3c3ZYZjQzQjE4cUprQ293c0dISU1fQXczMmxmWUJxZFJlZS1BVUxaajFSNU9DV25EVHJEbzhQakt0UDY4UllLY0tJVFUwQ0V6dHZab1FsSUo5NjB5M2ZhRXJFRUwtUnZYa2NqZXRWTWNxZDNJc2tJM0hrYzE4cTdBUWJNeTloX1NpRDJNRkFFbHFMc2RId0lZZGdndGYzUHlCZW01VDBGdTJKVHhvR1NLTnFLQw?oc=5",
+          "source": "Google News"
+        },
+        {
+          "title": "lululemon athletica (NASDAQ:LULU) Sets New 52-Week Low After Analyst Downgrade - MarketBeat",
+          "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOcTRpaWZxbVpUVlEyQjZYbkdzejNDUEJGTXNnQnYtTmdvU1Awc0FIUy1mclJNUV9DQmFHRUhNRkFucG1oZ25ueWFGRDgwb2txbWFGN0gwT0VpamhiYWt6LVdaeXVZNjh0ekdCTFFZVEVMNkpLZGFCOHVJUURrUTVPVDZORFQ2SmJ3ajBRMGc1cF9YcHVLVjJnZWw1S3QwSGwzTjdZTmNIcG0tRDVWNHpuQ1pfcGlvdmVGbTBSdDJWRm1qUFUwcE5DSw?oc=5",
+          "source": "Google News"
+        }
+      ]
+    },
+    {
+      "ticker": "NOW",
+      "name": "ServiceNow, Inc.",
+      "price": 112.45,
+      "change_pct": -5.79,
+      "volume": 28225667,
+      "avg_volume": 26500082,
+      "volume_ratio": 1.07,
+      "market_cap": 115970588672,
+      "week_52_high": 211.48,
+      "week_52_low": 81.24,
+      "institutional_pct": 0.8847,
+      "top_institutions": [
+        {
+          "Date Reported": "2026-03-31 00:00:00",
+          "Holder": "Blackrock Inc.",
+          "pctHeld": 0.0946,
+          "Shares": 97501594,
+          "Value": 10964053947,
+          "pctChange": 0.0228
+        },
+        {
+          "Date Reported": "2026-03-31 00:00:00",
+          "Holder": "Vanguard Capital Management LLC",
+          "pctHeld": 0.0659,
+          "Shares": 67980219,
+          "Value": 7644375419,
+          "pctChange": 1.0
+        },
+        {
+          "Date Reported": "2026-03-31 00:00:00",
+          "Holder": "State Street Corporation",
+          "pctHeld": 0.0466,
+          "Shares": 48058492,
+          "Value": 5404177278,
+          "pctChange": 0.0034
+        }
+      ],
+      "sector": "Technology",
+      "currency": "USD",
+      "news": [
+        {
+          "title": "Why ServiceNow (NOW) Shares Are Falling Today",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-servicenow-now-shares-falling-024014947.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Trump Loaded Up on ServiceNow Stock at the Peak of SaaS-pocalypse Fears. What Comes Next for Software Stocks.",
+          "link": "https://www.barchart.com/story/news/2331829/trump-loaded-up-on-servicenow-stock-at-the-peak-of-saas-pocalypse-fears-what-comes-next-for-software-stocks?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "ServiceNow Stock Plunges 30% in 6 Months: Hold Tight or Book Profits?",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/servicenow-stock-plunges-30-6-124500486.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Cloud AI Update - Devenex Launches Governance Infrastructure for Enterprise AI Agents",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/cloud-ai-devenex-launches-governance-123801310.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Cognizant Tie Up Puts ServiceNow At Center Of AI Governance Story",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/cognizant-tie-puts-servicenow-center-100948532.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Trump Loaded Up on ServiceNow Stock at the Peak of SaaS-pocalypse Fears. What Comes Next for Software Stocks. - Barchart.com",
+          "link": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxQdWExT2psYlFGc20xRlhRdnhTVFkxczJtcXp5RGt0aWJLRGE5eUtnSktDbEdMWFBpVFZUajBlRGZwNG5NOHdnSkx5Z2IzUnhKV1FlM01Rd3F1bU5rN1FsOVNaYlFBakVBZU9zZVM4SGxacmxRTUhxbjJKWmppV2o0dDRvbkl3UjQzMm9OU19fZlpqQVRwYUp0cTl2WUppWkxhTTB6eW5NbExCQjBlUVM0N2pGeEF0Z2k5dXJhalprb21DeDFFSVd2Q3Zwd0gzYkYtTEVRSVFRbExOS2RBbzdHcmliMDd0dw?oc=5",
+          "source": "Google News"
+        },
+        {
+          "title": "ServiceNow and Snowflake Shares Are Falling, What You Need To Know - Yahoo Finance",
+          "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPeFNvTVlQYnd3VFlfclNIa0U0WW9IUFZjLW5WV3pCVmZManVZWHN6TkQzMnF3b3BkY25venZHV0hOcG5uT1ZEU1B1dVl2X2F5Xzh4c3VXYmFxb25HSU9uRm5OS25FaXN5dC04TGFmb2JfdWpJSG13QnpJNGxVTEdNRUk5MXUyRU1rQ0c0eFlBVGxleHZZUUNHSGNyTmlUNTdWN1lhcGhUZm4?oc=5",
+          "source": "Google News"
+        },
+        {
+          "title": "ServiceNow Stock Plunges 30% in 6 Months: Hold Tight or Book Profits? - Zacks Investment Research",
+          "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQVXd6cGN4bjctODJzdXUtOHpkSThGM3dzeUdQLVV3ZEZ1bGkzUFNMMXN4a3hGSjVCUlhzdS14bnBFbm5FSU9tQmZ2TDFvY3pUdDR2RjF2Q0trdmo0N25OX3FfM3pkY0J3NE92V3hpZGVyTTEwRGVxRUVyd3NEaEwySGtrZkRYa1VHQlZ4aDJvY2FZM3Z6TExDeENpMjlkQXdOM0RHS2J6N015RUk?oc=5",
+          "source": "Google News"
+        }
+      ]
+    },
+    {
+      "ticker": "2884.TW",
+      "name": "E.SUN Financial Holding Company, Ltd.",
+      "price": 33.35,
+      "change_pct": -0.3,
+      "volume": 49365922,
+      "avg_volume": 38311351,
+      "volume_ratio": 1.29,
+      "market_cap": 539402895360,
+      "week_52_high": 35.5,
+      "week_52_low": 29.4,
+      "institutional_pct": 0.3158,
+      "top_institutions": [],
+      "sector": "Financial Services",
+      "currency": "TWD",
+      "news": [
+        {
+          "title": "E.SUN Financial Holding Earns 12th Consecutive Inclusion in Dow Jones Best-in-Class Indices",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/e-sun-financial-holding-earns-010000324.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "E.SUN Financial Holding Named to S&P Global Sustainability Yearbook for 12 Consecutive Years",
+          "link": "https://finance.yahoo.com/news/e-sun-financial-holding-named-060600313.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Yoshimura Food Holdings (TSE:2884) Margin Improvement Reinforces Bullish Narrative on Earnings Quality",
+          "link": "https://finance.yahoo.com/news/yoshimura-food-holdings-tse-2884-091308151.html?.tsrc=rss",
+          "source": "Yahoo Finance"
+        },
+        {
+          "title": "Savings deposits to total deposits of E.SUN Financial Holding Co., Ltd. \u2013 TWSE:2884 - TradingView",
+          "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNUkpRNVZ6SXl1TEhBNDFBenJFMnJhSkVLcHNVZHExNkotNmNxUGxIUXRNRTZxYzhnOGwwVFhnTUNFSlJLNkJmNGpDTEpwRGE5M29RNk1MQjJ5NS1xc0lpNktiaXV4WmlTQ3BKTmlRbzdQOWhTYVhHUVk5U0NMOEctYkNZeU9BMjhERkV6WE5yVjc3LWRFWWp2OUliNU9DYWNFaHlQZUFRLWVZM2d1c080WWtJY1QyWmM?oc=5",
+          "source": "Google News"
+        },
+        {
+          "title": "E.Sun Financial Holding Co stock (TW0002884004): shares steady as Taiwan financial group updates inv - AD HOC NEWS",
+          "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxPajkzVS1rU2tTMTNVaW5RSEFBakhqU1REbFpteG4tR3BGT1pMTW4wMkN6R2JqVWIwTm81V1J5ZjBMZGxfZWQ2dG10UnIwZTYtdXVjWFRnUVpJYXdfQ0ZjSWhBelVuU3IzOGNmX2M5MUZkVldwc1BJQzZlSFZ4amcwYVJPQUVWa2dWdUdBaC1tUFRqcjdkeVRlcnRBQ3B4ejVURHlmblBsLVU2RUVWSDNWdWZZaDYteXZBZmxTWWc4Uy1TNXdPbmNZ?oc=5",
+          "source": "Google News"
+        },
+        {
+          "title": "E.Sun shareholders back acquisition - Taipei Times",
+          "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5wTW01YXZ0NmFwbDZsRDNxWDBLV0lTNEl6NUg1OXNGRGRSSUM5TC0tcmdFaVRxRzZBbDh3YkVXZXJERmNkOHdYS201b1RVeF96UUZ4NWJ6SmFjVnRnV3FvUkI5NHZyb0dCbVgzZWJ1LW9NZi1TQ0E?oc=5",
+          "source": "Google News"
+        },
+        {
+          "title": "E.Sun to buy Mercuries Life, become Taiwan's 5th-largest listed FHC - Focus Taiwan",
+          "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1DbnZsTVdTOVhXOWlWcFVRYWFBTVRCdFR6NDJ1cmJZcUxjRnlqWVRrNDN4VHdiNnFSZkRXTVhYSzRNR1VoZng2UWx5RERrSzhUOTBoZUxPVQ?oc=5",
+          "source": "Google News"
+        }
+      ]
+    }
+  ],
+  "analysis": {
+    "summary": "Watchlist is mixed \u2014 1 up, 6 down. Drops: SOFI -6.53%, LULU -8.56%, NOW -5.79% \u00b7 Unusual volume: LULU.",
+    "alerts": [
+      "LULU: volume 5.21x avg"
+    ],
+    "per_stock": {
+      "SOFI": [
+        "Down 6.53% today \u2014 significant drop",
+        "News tone: mostly positive"
+      ],
+      "GOOG": [
+        "News tone: mostly positive"
+      ],
+      "SCO": [
+        "No unusual signals today"
+      ],
+      "PLTR": [
+        "News tone: mostly positive"
+      ],
+      "LULU": [
+        "Down 8.56% today \u2014 significant drop",
+        "Volume 5.21x average \u2014 very unusual activity"
+      ],
+      "NOW": [
+        "Down 5.79% today \u2014 significant drop"
+      ],
+      "2884.TW": [
+        "News tone: mostly positive"
+      ]
+    }
+  }
+}
