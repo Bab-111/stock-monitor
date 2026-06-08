@@ -1,51 +1,51 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock Monitor v4</title>
     <style>
-        body { font-family: Arial; background: #f0f0f0; margin: 0; padding: 20px; }
-        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; }
-        h1 { color: #667eea; text-align: center; }
-        .stock { background: #f9f9f9; padding: 20px; margin: 10px 0; border-left: 5px solid #667eea; }
-        .ticker { font-size: 18px; font-weight: bold; color: #667eea; }
-        .price { font-size: 16px; margin: 10px 0; }
-        .positive { color: green; }
-        .negative { color: red; }
-        footer { text-align: center; margin-top: 30px; color: #999; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); overflow: hidden; }
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px 30px; text-align: center; }
+        header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .timestamp { font-size: 1em; opacity: 0.9; margin-bottom: 15px; }
+        .alerts-banner { background: #fff3cd; border-bottom: 3px solid #ffc107; padding: 15px 30px; display: flex; gap: 20px; flex-wrap: wrap; }
+        .alert-box { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section h2 { font-size: 1.8em; margin-bottom: 20px; color: #667eea; border-bottom: 3px solid #667eea; padding-bottom: 10px; }
+        .stock-card { background: #f8f9fa; border-left: 5px solid #667eea; padding: 25px; margin-bottom: 25px; border-radius: 8px; }
+        .stock-card.volume-spike { border-left-color: #ff6b6b; background: #ffe0e0; }
+        .stock-card.earnings-alert { border-left-color: #ffc107; background: #fff8e1; }
+        .stock-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .ticker { font-size: 1.6em; font-weight: bold; color: #667eea; }
+        .price { font-size: 1.3em; font-weight: 600; }
+        .change.positive { color: #28a745; }
+        .change.negative { color: #dc3545; }
+        .alerts { background: #fff9e6; border: 1px solid #ffc107; padding: 12px; border-radius: 6px; margin-bottom: 15px; font-weight: 500; color: #e67e22; }
+        .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 15px; }
+        .metric { background: white; padding: 12px; border-radius: 6px; border: 1px solid #e0e0e0; }
+        .metric-label { color: #666; font-weight: 600; font-size: 0.9em; }
+        .metric-value { color: #333; font-size: 1.2em; margin-top: 4px; font-weight: 600; }
+        .ai-summary { background: #e8f4f8; border-left: 4px solid #2196F3; padding: 15px; margin-top: 15px; border-radius: 4px; font-size: 0.95em; line-height: 1.6; color: #1565c0; }
+        .signal { background: #fff9e6; border-left: 4px solid #f39c12; padding: 12px; margin-top: 10px; border-radius: 4px; color: #d68910; font-weight: 500; }
+        .news { margin-top: 15px; font-size: 0.9em; }
+        .news-item { margin: 10px 0; padding: 10px; background: white; border-radius: 4px; border: 1px solid #e0e0e0; }
+        .news-item a { color: #667eea; text-decoration: none; font-weight: 500; }
+        .source { font-size: 0.8em; color: #999; margin-top: 4px; }
+        footer { background: #f8f9fa; padding: 20px; text-align: center; color: #666; font-size: 0.9em; border-top: 1px solid #e0e0e0; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📊 Stock Monitor v4</h1>
-        <p style="text-align: center;">Updated: 2026-06-08 17:09 Taiwan Time</p>
-        <hr>
-<div class="stock">
-            <div class="ticker">SOFI - SoFi Technologies, Inc.</div>
-            <div class="price">USD16.03 <span class="negative">(-6.53%)</span></div>
-        </div><div class="stock">
-            <div class="ticker">GOOG - Alphabet Inc.</div>
-            <div class="price">USD365.76 <span class="negative">(-0.95%)</span></div>
-        </div><div class="stock">
-            <div class="ticker">SCO - ProShares UltraShort Bloomberg Crude Oil</div>
-            <div class="price">USD26.48 <span class="positive">(+3.08%)</span></div>
-        </div><div class="stock">
-            <div class="ticker">PLTR - Palantir Technologies Inc.</div>
-            <div class="price">USD135.53 <span class="negative">(-4.35%)</span></div>
-        </div><div class="stock">
-            <div class="ticker">LULU - lululemon athletica inc.</div>
-            <div class="price">USD114.23 <span class="negative">(-8.56%)</span></div>
-        </div><div class="stock">
-            <div class="ticker">NOW - ServiceNow, Inc.</div>
-            <div class="price">USD112.45 <span class="negative">(-5.79%)</span></div>
-        </div><div class="stock">
-            <div class="ticker">2884.TW - E.SUN Financial Holding Company, Ltd.</div>
-            <div class="price">TWD32.9 <span class="negative">(-1.35%)</span></div>
-        </div>
-        <hr>
-    </div>
-    <footer>
-        <p>🤖 Stock Monitor v4 • AI-Powered • 100% FREE</p>
-    </footer>
-</body>
-</html>
+        <header>
+            <h1>📊 Stock Monitor v4</h1>
+            <div class="timestamp">
+                Updated: Mon, Jun 08, 2026 · 17:17 Taiwan Time<br>
+                <small>AI-Powered • Volume Alerts • Earnings Calendar • News Summary</small>
+            </div>
+        </header>
+<div class="alerts-banner"><div class="alert-box">🔥 1 VOLUME SPIKE(s)</div></div><div class="content"><div class="section"><h2>📈 Stock Analysis</h2><div class="stock-card"><div class="stock-header"><span class="ticker">SOFI</span><span class="price">USD16.03 <span class="change negative">(-6.53%)</span></span></div><div><strong>SoFi Technologies, Inc.</strong></div><div class="metrics"><div class="metric"><div class="metric-label">RSI</div><div class="metric-value">None</div></div><div class="metric"><div class="metric-label">52w Low</div><div class="metric-value">USD13.46</div></div><div class="metric"><div class="metric-label">52w High</div><div class="metric-value">USD32.73</div></div></div><div class="signal">📉 Heavy drop: -6.53%</div><div class="news"><strong>📰 Latest News:</strong><div class="news-item"><a href="https://www.fool.com/investing/2026/06/07/easy-way-retail-invest-spacex-ipo-hood-sofi/?.tsrc=rss" target="_blank">The 2 Easiest Ways for Retail Investors to Buy Into the SpaceX IPO</a><div class="source">Yahoo Finance</div></div><div class="news-item"><a href="https://www.fool.com/investing/2026/06/06/want-to-retire-a-millionaire-this-under-20-stock-d/?.tsrc=rss" target="_blank">Want to Retire a Millionaire? This Under-$20 Stock Deserves a Look.</a><div class="source">Yahoo Finance</div></div><div class="news-item"><a href="https://finance.yahoo.com/markets/stocks/articles/sofi-sofi-trading-technology-ambition-140908290.html?.tsrc=rss" target="_blank">Is SoFi (SOFI) Trading Technology Ambition for Higher Legal Risk With Its New AI</a><div class="source">Yahoo Finance</div></div></div></div><div class="stock-card"><div class="stock-header"><span class="ticker">GOOG</span><span class="price">USD365.76 <span class="change negative">(-0.95%)</span></span></div><div><strong>Alphabet Inc.</strong></div><div class="metrics"><div class="metric"><div class="metric-label">RSI</div><div class="metric-value">None</div></div><div class="metric"><div class="metric-label">52w Low</div><div class="metric-value">USD163.33</div></div><div class="metric"><div class="metric-label">52w High</div><div class="metric-value">USD404.47</div></div></div><div class="signal">Normal</div><div class="news"><strong>📰 Latest News:</strong><div class="news-item"><a href="https://247wallst.com/investing/2026/06/08/smcx-sank-67-in-a-year-while-the-underlying-stock-rose-2/?.tsrc=rss" target="_blank">SMCX Sank 67% in a Year While the Underlying Stock Rose 2%</a><div class="source">Yahoo Finance</div></div><div class="news-item"><a href="https://uk.finance.yahoo.com/news/starmer-gives-tech-companies-ultimatum-085907238.html?.tsrc=rss" target="_blank">Starmer gives tech companies ultimatum over children sending naked images</a><div class="source">Yahoo Finance</div></div><div class="news-item"><a href="https://finance.yahoo.com/sectors/technology/articles/tech-stocks-gain-trump-mulls-083936745.html?.tsrc=rss" target="_blank">Tech stocks gain as Trump mulls government stake in AI companies</a><div class="source">Yahoo Finance</div></div></div></div><div class="stock-card"><div class="stock-header"><span class="ticker">SCO</span><span class="price">USD26.48 <span class="change positive">(+3.08%)</span></span></div><div><strong>ProShares UltraShort Bloomberg Crude Oil</strong></div><div class="metrics"><div class="metric"><div class="metric-label">RSI</div><div class="metric-value">None</div></div><div class="metric"><div class="metric-label">52w Low</div><div class="metric-value">USD22.84</div></div><div class="metric"><div class="metric-label">52w High</div><div class="metric-value">USD84.16</div></div></div><div class="signal">Normal</div><div class="news"><strong>📰 Latest News:</strong><div class="news-item"><a href="https://finance.yahoo.com/markets/options/articles/proshares-announces-etf-share-splits-223000629.html?.tsrc=rss" target="_blank">ProShares Announces ETF Share Splits</a><div class="source">Yahoo Finance</div></div><div class="news-item"><a href="https://247wallst.com/investing/2026/05/05/oils-decline-opens-the-door-on-these-4-sub-30-buys/?.tsrc=rss" target="_blank">Oil’s Decline Opens the Door on These 4 Sub-$30 Buys</a><div class="source">Yahoo Finance</div></div><div class="news-item"><a href="https://247wallst.com/investing/2026/04/02/here-are-thursdays-top-wall-street-analyst-research-calls/?.tsrc=rss" target="_blank">Here Are Thursday’s Top Wall Street Analyst Research Calls: Akamai Technologies,</a><div class="source">Yahoo Finance</div></div></div></div><div class="stock-card"><div class="stock-header"><span class="ticker">PLTR</span><span class="price">USD135.53 <span class="change negative">(-4.35%)</span></span></div><div><strong>Palantir Technologies Inc.</strong></div><div class="metrics"><div class="metric"><div class="metric-label">RSI</div><div class="metric-value">None</div></div><div class="metric"><div class="metric-label">52w Low</div><div class="metric-value">USD118.93</div></div><div class="metric"><div class="metric-label">52w High</div><div class="metric-value">USD207.52</div></div></div><div class="signal">Normal</div><div class="news"><strong>📰 Latest News:</strong><div class="news-item"><a href="https://www.fool.com/investing/2026/06/08/last-year-wall-street-said-this-ai-stock-was-overv/?.tsrc=rss" target="_blank">Last Year, Wall Street Said This AI Stock Was Overvalued. Now, Wall Street Expec</a><div class="source">Yahoo Finance</div></div><div class="news-item"><a href="https://finance.yahoo.com/sectors/technology/articles/palantir-ceo-companies-token-maxing-003112985.html?.tsrc=rss" target="_blank">Palantir CEO: Companies Are 'Token Maxing' On AI The Way People Binge Porn</a><div class="source">Yahoo Finance</div></div><div class="news-item"><a href="https://finance.yahoo.com/markets/stocks/articles/palantir-technologies-inc-pltr-good-212318080.html?.tsrc=rss" target="_blank">Is Palantir Technologies Inc. (PLTR) A Good Stock To Buy Now?</a><div class="source">Yahoo Finance</div></div></div></div><div class="stock-card volume-spike"><div class="stock-header"><span class="ticker">LULU</span><span class="price">USD114.23 <span class="change negative">(-8.56%)</span></span></div><div><strong>lululemon athletica inc.</strong></div><div class="alerts">🔥 Volume: 2.23x average</div><div class="metrics"><div class="metric"><div class="metric-label">RSI</div><div class="metric-value">None</div></div><div class="metric"><div class="metric-label">52w Low</div><div class="metric-value">USD109.36</div></div><div class="metric"><div class="metric-label">52w High</div><div class="metric-value">USD338.49</div></div></div><div class="signal">🔥 VOLUME SPIKE: 2.23x average | 📉 Heavy drop: -8.56%</div><div class="news"><strong>📰 Latest News:</strong><div class="news-item"><a href="https://stocktwits.com/news-articles/markets/equity/lulu-elf-shak-stocks-hit-52-week-lows-last-week-what-is-dragging-them-lower/cZ0HpStRe6Z?.tsrc=rss" target="_blank">LULU, ELF, SHAK Stocks Hit 52-Week Lows Last Week: What's Dragging Them Lower?</a><div class="source">Yahoo Finance</div></div><div class="news-item"><a href="https://stocktwits.com/news-articles/markets/equity/michael-burry-boosts-lululemon-stake-relative-lulu-outweighs-microsoft/cZ0H8VJRe6K?.tsrc=rss" target="_blank">Michael Burry Boosts Lululemon Stake: 'Relative Value In LULU Outweighs Microsof</a><div class="source">Yahoo Finance</div></div><div class="news-item"><a href="https://www.thestreet.com/investing/stocks/lululemon-lulu-stock-eyes-key-growth-market-and-its-not-the-u-s?.tsrc=rss" target="_blank">Lululemon eyes key growth market and it's not the U.S.</a><div class="source">Yahoo Finance</div></div></div></div><div class="stock-card"><div class="stock-header"><span class="ticker">NOW</span><span class="price">USD112.45 <span class="change negative">(-5.79%)</span></span></div><div><strong>ServiceNow, Inc.</strong></div><div class="metrics"><div class="metric"><div class="metric-label">RSI</div><div class="metric-value">None</div></div><div class="metric"><div class="metric-label">52w Low</div><div class="metric-value">USD81.24</div></div><div class="metric"><div class="metric-label">52w High</div><div class="metric-value">USD211.48</div></div></div><div class="signal">📉 Heavy drop: -5.79%</div><div class="news"><strong>📰 Latest News:</strong><div class="news-item"><a href="https://finance.yahoo.com/markets/article/ai-stock-mania-is-taking-over-the-markets-in-2026-123000964.html?.tsrc=rss" target="_blank">AI stock mania is taking over the markets in 2026</a><div class="source">Yahoo Finance</div></div><div class="news-item"><a href="https://www.fool.com/investing/2026/06/06/is-salesforce-or-servicenow-a-better-stock-to-buy/?.tsrc=rss" target="_blank">Is Salesforce or ServiceNow a Better Stock to Buy Right Now?</a><div class="source">Yahoo Finance</div></div><div class="news-item"><a href="https://finance.yahoo.com/markets/stocks/articles/why-servicenow-now-shares-falling-024014947.html?.tsrc=rss" target="_blank">Why ServiceNow (NOW) Shares Are Falling Today</a><div class="source">Yahoo Finance</div></div></div></div><div class="stock-card"><div class="stock-header"><span class="ticker">2884.TW</span><span class="price">TWD32.9 <span class="change negative">(-1.35%)</span></span></div><div><strong>E.SUN Financial Holding Company, Ltd.</strong></div><div class="metrics"><div class="metric"><div class="metric-label">RSI</div><div class="metric-value">None</div></div><div class="metric"><div class="metric-label">52w Low</div><div class="metric-value">TWD29.4</div></div><div class="metric"><div class="metric-label">52w High</div><div class="metric-value">TWD35.5</div></div></div><div class="signal">Normal</div><div class="news"><strong>📰 Latest News:</strong><div class="news-item"><a href="https://finance.yahoo.com/markets/stocks/articles/e-sun-financial-holding-earns-010000324.html?.tsrc=rss" target="_blank">E.SUN Financial Holding Earns 12th Consecutive Inclusion in Dow Jones Best-in-Cl</a><div class="source">Yahoo Finance</div></div><div class="news-item"><a href="https://finance.yahoo.com/news/e-sun-financial-holding-named-060600313.html?.tsrc=rss" target="_blank">E.SUN Financial Holding Named to S&P Global Sustainability Yearbook for 12 Conse</a><div class="source">Yahoo Finance</div></div><div class="news-item"><a href="https://finance.yahoo.com/news/yoshimura-food-holdings-tse-2884-091308151.html?.tsrc=rss" target="_blank">Yoshimura Food Holdings (TSE:2884) Margin Improvement Reinforces Bullish Narrati</a><div class="source">Yahoo Finance</div></div></div></div></div></div><footer><p>🤖 Stock Monitor v4 • AI-Powered • Fact-Checked • 100% FREE</p></footer></div></body></html>
