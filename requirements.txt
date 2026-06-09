@@ -2,3 +2,5 @@ yfinance>=0.2.32
 feedparser>=6.0.10
 requests>=2.31.0
 pandas>=2.0.0
+beautifulsoup4>=4.11.0
+lxml>=4.9.0
