@@ -30,10 +30,7 @@ jobs:
           pip install yfinance feedparser requests pandas beautifulsoup4 lxml
 
       - name: Run Stock Monitor
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          python scripts/monitor.py
+        run: python scripts/monitor.py
 
       - name: Commit and push
         run: |
