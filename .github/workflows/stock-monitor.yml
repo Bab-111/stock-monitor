@@ -2,8 +2,8 @@ name: Stock Monitor v4
 
 on:
   schedule:
-    - cron: '0 20 * * *'
     - cron: '0 8 * * *'
+    - cron: '0 14 * * *'
   workflow_dispatch:
 
 jobs:
