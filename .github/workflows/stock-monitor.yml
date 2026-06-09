@@ -1,8 +1,13 @@
 name: Stock Monitor v4
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'stocks.json'
   schedule:
-    - cron: '0 15 * * *'
+    - cron: '0 8 * * *'
+    - cron: '0 14 * * *'
   workflow_dispatch:
 
 jobs:
@@ -36,7 +41,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "Stock Monitor Bot"
           git add -A
-          git commit -m "Stock Monitor Report - $(date -u +'%Y-%m-%d %H:%M UTC')" || echo "No changes"
+          git commit -m "Stock Monitor - $(date -u +'%Y-%m-%d %H:%M UTC')" || echo "No changes"
           git push
 
       - name: Deploy to GitHub Pages
