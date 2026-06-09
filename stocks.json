@@ -1,11 +1,12 @@
 {
   "tickers": [
-    "SOFI",
     "GOOG",
+    "SOFI",
     "SCO",
     "PLTR",
     "LULU",
     "NOW",
+    "QCOM",
     "2884.TW"
   ],
   "config": {
