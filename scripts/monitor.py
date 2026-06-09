@@ -626,9 +626,8 @@ if spikes or earnings_week:
     if spikes:
         html += f'<div class="top-alert">🔥 VOLUME SPIKE(s) DETECTED: {", ".join([s["ticker"] for s in spikes])}</div>'
     if earnings_week:
-        html += f'<div class="top-alert">📚 EARNINGS THIS WEEK: {", ".join([f"{s[\"ticker\"]} ({s[\"earnings\"][\"days\"]}d)" for s in earnings_week])}</div>'
-    html += '</div>'
-
+   earnings_list = ", ".join([s["ticker"] + " (" + str(s["earnings"]["days"]) + "d)" for s in earnings_week])
+html += f'<div class="top-alert">📚 EARNINGS THIS WEEK: {earnings_list}</div>'
 html += '<div class="content">'
 
 for s in stocks:
