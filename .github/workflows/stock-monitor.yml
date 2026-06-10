@@ -1,14 +1,9 @@
 name: Stock Monitor v4
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
-    paths:
-      - 'stocks.json'
-  schedule:
-    - cron: '0 8 * * *'
-    - cron: '0 14 * * *'
-  workflow_dispatch:
 
 jobs:
   monitor:
