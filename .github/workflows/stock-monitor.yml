@@ -2,7 +2,8 @@ name: Stock Monitor v4
 
 on:
   schedule:
-  - cron: '0 10 * * *'
+  - cron: '0 8 * * *'
+  - cron: '0 14 * * *'
   workflow_dispatch:
 
 jobs:
@@ -10,8 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pages: write
-      id-token: write
 
     steps:
       - uses: actions/checkout@v4
